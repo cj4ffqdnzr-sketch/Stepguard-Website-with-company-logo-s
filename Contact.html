@@ -61,6 +61,71 @@
 
   .wrap{ max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad); position: relative; z-index: 1;}
 
+   /* ---------- Atmosphere ---------- */
+  .bg-grid{
+    position:fixed;inset:0;pointer-events:none;z-index:0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, #000 40%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, #000 40%, transparent 75%);
+    opacity:.55;
+  }
+  .bg-glow{
+    position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:
+      radial-gradient(900px 600px at 80% -10%, rgba(224,82,31,.18), transparent 60%),
+      radial-gradient(700px 500px at 0% 30%, rgba(224,82,31,.08), transparent 60%);
+  }
+
+  /* ---------- Language bar ---------- */
+  .langbar{
+    position: sticky; top: 0; z-index: 60;
+    background: #16202c;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+  .langbar-inner{
+    max-width: var(--maxw); margin: 0 auto;
+    padding: 8px var(--pad);
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .langbar-tag{
+    color: var(--dim);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .langbar-tag::before{
+    content: ""; width: 5px; height: 5px; border-radius: 50%;
+    background: var(--ok); box-shadow: 0 0 6px var(--ok);
+  }
+  .langbar-pick{ display: inline-flex; gap: 0; align-items: center; border: 1px solid var(--line-strong); border-radius: 999px; padding: 3px; background: rgba(0,0,0,.02); }
+  .langbar-pick button{
+    padding: 4px 12px; border-radius: 999px;
+    color: var(--muted); font-family: var(--mono); font-size: 11px; letter-spacing: .14em;
+    transition: background .2s, color .2s;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .langbar-pick button .flag{
+    width: 18px; height: 12px;
+    border-radius: 2px;
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.12);
+    display: inline-block;
+    line-height: 0;
+  }
+  .langbar-pick button .flag svg{ display: block; width: 100%; height: 100%; }
+  .langbar-pick button:hover{ color: var(--text); }
+  .langbar-pick button.on{ background: var(--accent); color: #fff; }
+  @media (max-width: 560px){
+    .langbar-tag{ display: none; }
+    .langbar-inner{ justify-content: center; }
+  }
+
   /* ---------- Nav ---------- */
   nav.top{
     position: sticky; top: 0; z-index: 30;
