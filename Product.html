@@ -727,67 +727,57 @@
 
 <!-- CONTACT -->
 <section class="cta" id="contact">
-  <div class="cta-grid">
+  <div class="cta-grid" style="align-items: flex-start;">
     <div>
-      <div class="section-eyebrow" style="margin-bottom:18px;">Praat met ons</div>
-      <h2>Laten we kennismaken.</h2>
-      <p>Plan een korte demo of een installatie-inschatting. Stuur direct een bericht naar de juiste persoon, of vul het formulier in. We reageren binnen twee werkdagen, in het Nederlands, Engels of Duits.</p>
+      <div class="section-eyebrow" data-i18n="contact_eyebrow" style="margin-bottom:18px;">Praat met ons</div>
+      <h2 data-i18n="contact_title">Mail rechtstreeks met de juiste persoon.</h2>
+      <p data-i18n="contact_lede">Wilt u weten wat Stepguard voor uw roltrappen kan betekenen? Stuur direct een bericht naar de juiste persoon, of vul rechts het formulier in, we reageren binnen twee werkdagen.</p>
+
       <div class="people">
-        <div class="person" id="contact-willem">
-          <div class="avatar" aria-hidden="true"><img src="images/team/Willem.jpeg" alt="" loading="lazy" /></div>
+        <div class="person">
+          <div class="avatar" aria-hidden="true">W</div>
           <div class="info">
-            <span class="role">Verkoop</span>
+            <span class="role" data-i18n="contact_role_sales">Verkoop</span>
             <span class="name">Willem van der Heijden</span>
             <a class="email" href="mailto:willem@stepguard.nl">willem@stepguard.nl</a>
           </div>
           <a class="arrow-btn" href="mailto:willem@stepguard.nl" aria-label="Mail Willem">→</a>
         </div>
-        <div class="person" id="contact-gertjan">
-          <div class="avatar" aria-hidden="true"><img src="images/team/Gertjan.jpeg" alt="" loading="lazy" /></div>
+        <div class="person">
+          <div class="avatar" aria-hidden="true">G</div>
           <div class="info">
-            <span class="role">Planning</span>
+            <span class="role" data-i18n="contact_role_planning">Planning</span>
             <span class="name">Gertjan van den Bogaert</span>
             <a class="email" href="mailto:gertjan@stepguard.nl">gertjan@stepguard.nl</a>
           </div>
           <a class="arrow-btn" href="mailto:gertjan@stepguard.nl" aria-label="Mail Gertjan">→</a>
         </div>
-        <div class="person" id="contact-daniel">
-          <div class="avatar" aria-hidden="true"><img src="images/team/Daniel.jpeg" alt="" loading="lazy" /></div>
+        <div class="person">
+          <div class="avatar" aria-hidden="true">D</div>
           <div class="info">
-            <span class="role">Techniek</span>
+            <span class="role" data-i18n="contact_role_tech">Techniek</span>
             <span class="name">Daniël Telgen</span>
             <a class="email" href="mailto:daniel@stepguard.nl">daniel@stepguard.nl</a>
           </div>
           <a class="arrow-btn" href="mailto:daniel@stepguard.nl" aria-label="Mail Daniël">→</a>
         </div>
       </div>
+
       <div class="address-block">
         <div>
-          <div class="lbl">Adres</div>
+          <div class="lbl" data-i18n="contact_addr_lbl">Adres</div>
           <div class="val">Loverensestraat 31<br/>5266&nbsp;AN Cromvoirt<br/>Nederland</div>
         </div>
         <div>
-          <div class="lbl">KvK</div>
+          <div class="lbl" data-i18n="contact_kvk_lbl">KvK</div>
           <div class="val mono">42054745</div>
         </div>
         <div>
-          <div class="lbl">Bedrijf</div>
+          <div class="lbl" data-i18n="contact_company_lbl">Bedrijf</div>
           <div class="val">Stepguard B.V.</div>
         </div>
       </div>
     </div>
-    <form class="cta-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Bedankt, we nemen contact op'; this.querySelector('button').disabled=true;">
-      <div class="row2">
-        <input type="text" placeholder="Voornaam" required />
-        <input type="text" placeholder="Operator / bedrijf" required />
-      </div>
-      <input type="email" placeholder="Zakelijk e-mailadres" required />
-      <input type="text" placeholder="Netwerkgrootte, ca. aantal roltrappen" />
-      <button class="btn btn-primary btn-arrow" type="submit">Demo aanvragen&nbsp;</button>
-      <div class="hint">Wij reageren in het Nederlands, Engels of Duits. Uw keuze.</div>
-    </form>
-  </div>
-</section>
 
 <footer class="foot">
   <div>© 2026 Stepguard B.V. · Cboost spin-off</div>
