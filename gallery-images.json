@@ -1,0 +1,30 @@
+{
+  "images": [
+    {
+      "itemIndex": 0,
+      "src": "images/gallery/sensor-unit-front.jpg",
+      "alt": "Stepguard SG-01 sensor unit front view with IP65 housing"
+    },
+    {
+      "itemIndex": 1,
+      "src": "images/gallery/under-escalator-mounting.jpg",
+      "alt": "SG-02 Stepguard sensor mounted under the escalator tread chain"
+    },
+    {
+      "itemIndex": 2,
+      "src": "images/gallery/camera-optics-module.jpg",
+      "alt": "SG-03 Industrial IDS camera optics and low-light vision module"
+    },
+    {
+      "itemIndex": 3,
+      "src": "images/gallery/poe-cable-connector.jpg",
+      "alt": "SG-04 Single PoE cable connection for power and data"
+    },
+    {
+      "itemIndex": 4,
+      "src": "images/gallery/installation-team-field.jpg",
+      "alt": "SG-05 Stepguard installation team completing field setup in less than 2 hours"
+    }
+  ],
+  "timestamp": "2026-06-09"
+}
