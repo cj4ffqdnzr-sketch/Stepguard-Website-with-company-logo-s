@@ -1802,72 +1802,69 @@
   </div>
 </section>
 <!-- CONTACT -->
+<!-- CONTACT -->
 <section class="cta" id="contact">
-  <div class="cta-grid" style="align-items: flex-start;">
+  <div class="cta-grid">
     <div>
-      <div class="section-eyebrow" data-i18n="contact_eyebrow" style="margin-bottom:18px;">Praat met ons</div>
-      <h2 data-i18n="contact_title">Mail rechtstreeks met de juiste persoon.</h2>
-      <p data-i18n="contact_lede">Wilt u weten wat Stepguard voor uw roltrappen kan betekenen? Stuur direct een bericht naar de juiste persoon, of vul rechts het formulier in, we reageren binnen twee werkdagen.</p>
-
+      <div class="section-eyebrow" style="margin-bottom:18px;">Praat met ons</div>
+      <h2>Laten we kennismaken.</h2>
+      <p>Plan een korte demo of een installatie-inschatting. Stuur direct een bericht naar de juiste persoon, of vul het formulier in. We reageren binnen twee werkdagen, in het Nederlands, Engels of Duits.</p>
       <div class="people">
-        <div class="person">
-          <div class="avatar" aria-hidden="true">W</div>
+        <div class="person" id="contact-willem">
+          <div class="avatar" aria-hidden="true"><img src="images/team/Willem.jpeg" alt="" loading="lazy" /></div>
           <div class="info">
-            <span class="role" data-i18n="contact_role_sales">Verkoop</span>
+            <span class="role">Verkoop</span>
             <span class="name">Willem van der Heijden</span>
-            <a class="email" href="/cdn-cgi/l/email-protection#44332d28282129043730213423312536206a2a28"><span class="__cf_email__" data-cfemail="f98e9095959c94b98a8d9c899e8c988b9dd79795">[email&#160;protected]</span></a>
+            <a class="email" href="mailto:willem@stepguard.nl">willem@stepguard.nl</a>
           </div>
-          <a class="arrow-btn" href="/cdn-cgi/l/email-protection#4f382623232a220f3c3b2a3f283a2e3d2b612123" aria-label="Mail Willem">→</a>
+          <a class="arrow-btn" href="mailto:willem@stepguard.nl" aria-label="Mail Willem">→</a>
         </div>
-        <div class="person">
-          <div class="avatar" aria-hidden="true">G</div>
+        <div class="person" id="contact-gertjan">
+          <div class="avatar" aria-hidden="true"><img src="images/team/Gertjan.jpeg" alt="" loading="lazy" /></div>
           <div class="info">
-            <span class="role" data-i18n="contact_role_planning">Planning</span>
+            <span class="role">Planning</span>
             <span class="name">Gertjan van den Bogaert</span>
-            <a class="email" href="/cdn-cgi/l/email-protection#0b6c6e797f616a654b787f6e7b6c7e6a796f256567"><span class="__cf_email__" data-cfemail="a1c6c4d3d5cbc0cfe1d2d5c4d1c6d4c0d3c58fcfcd">[email&#160;protected]</span></a>
+            <a class="email" href="mailto:gertjan@stepguard.nl">gertjan@stepguard.nl</a>
           </div>
-          <a class="arrow-btn" href="/cdn-cgi/l/email-protection#54333126203e353a142720312433213526307a3a38" aria-label="Mail Gertjan">→</a>
+          <a class="arrow-btn" href="mailto:gertjan@stepguard.nl" aria-label="Mail Gertjan">→</a>
         </div>
-        <div class="person">
-          <div class="avatar" aria-hidden="true">D</div>
+        <div class="person" id="contact-daniel">
+          <div class="avatar" aria-hidden="true"><img src="images/team/Daniel.jpeg" alt="" loading="lazy" /></div>
           <div class="info">
-            <span class="role" data-i18n="contact_role_tech">Techniek</span>
+            <span class="role">Techniek</span>
             <span class="name">Daniël Telgen</span>
-            <a class="email" href="/cdn-cgi/l/email-protection#076366696e626b4774736277607266756329696b"><span class="__cf_email__" data-cfemail="0a6e6b64636f664a797e6f7a6d7f6b786e246466">[email&#160;protected]</span></a>
+            <a class="email" href="mailto:daniel@stepguard.nl">daniel@stepguard.nl</a>
           </div>
-          <a class="arrow-btn" href="/cdn-cgi/l/email-protection#bdd9dcd3d4d8d1fdcec9d8cddac8dccfd993d3d1" aria-label="Mail Daniël">→</a>
+          <a class="arrow-btn" href="mailto:daniel@stepguard.nl" aria-label="Mail Daniël">→</a>
         </div>
       </div>
-
       <div class="address-block">
         <div>
-          <div class="lbl" data-i18n="contact_addr_lbl">Adres</div>
+          <div class="lbl">Adres</div>
           <div class="val">Loverensestraat 31<br/>5266&nbsp;AN Cromvoirt<br/>Nederland</div>
         </div>
         <div>
-          <div class="lbl" data-i18n="contact_kvk_lbl">KvK</div>
+          <div class="lbl">KvK</div>
           <div class="val mono">42054745</div>
         </div>
         <div>
-          <div class="lbl" data-i18n="contact_company_lbl">Bedrijf</div>
+          <div class="lbl">Bedrijf</div>
           <div class="val">Stepguard B.V.</div>
         </div>
       </div>
     </div>
-
-    <form class="cta-form" data-i18n-form="1" onsubmit="event.preventDefault(); this.querySelector('button').textContent = (window.__i18n_t ? window.__i18n_t('cta_thanks') : 'Bedankt, we nemen contact op'); this.querySelector('button').disabled=true;">
+    <form class="cta-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Bedankt, we nemen contact op'; this.querySelector('button').disabled=true;">
       <div class="row2">
-        <input type="text" data-i18n-ph="cta_ph_name" placeholder="Voornaam" required />
-        <input type="text" data-i18n-ph="cta_ph_company" placeholder="Operator / bedrijf" required />
+        <input type="text" placeholder="Voornaam" required />
+        <input type="text" placeholder="Operator / bedrijf" required />
       </div>
-      <input type="email" data-i18n-ph="cta_ph_email" placeholder="Zakelijk e-mailadres" required />
-      <input type="text" data-i18n-ph="cta_ph_size" placeholder="Netwerk­grootte, ca. aantal roltrappen" />
-      <button class="btn btn-primary btn-arrow" type="submit" data-i18n="cta_submit">Demo aanvragen&nbsp;</button>
-      <div class="hint" data-i18n="cta_hint">Wij reageren in het Nederlands, Engels of Duits, uw keuze.</div>
+      <input type="email" placeholder="Zakelijk e-mailadres" required />
+      <input type="text" placeholder="Netwerkgrootte, ca. aantal roltrappen" />
+      <button class="btn btn-primary btn-arrow" type="submit">Demo aanvragen&nbsp;</button>
+      <div class="hint">Wij reageren in het Nederlands, Engels of Duits. Uw keuze.</div>
     </form>
   </div>
 </section>
-
 <!-- FOOTER -->
 <footer>
   <div class="foot">
