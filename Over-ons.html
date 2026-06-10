@@ -94,10 +94,36 @@
   .team-photo{ position:relative; width:100%; aspect-ratio:1/1; border-radius:10px; margin-bottom:18px; overflow:hidden; background:repeating-linear-gradient(135deg, rgba(127,127,127,.10) 0 12px, transparent 12px 24px), var(--surface-2); bo(--surface-2); border:1px solid var(--line); display:grid; place-items:center; font-family:var(--mono); font-size:10px; letter-spacing:.14em; color:var(--dim); }
   .role-tag{ font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-2); }
   /* Clickable team photo -> jumps to that person's contact details */
-  .team-link{ display:block; width:100%; height:100%; position:absolute; inset:0; cursor:pointer; }
-  .team-link::after{ content:"Contact \2192"; position:absolute; left:0; right:0; bottom:0; padding:30px 14px 12px; font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:#fff; background:linear-gradient(transparent, rgba(15,23,34,.82)); opacity:0; transform:translateY(6px); transition:opacity .25s, transform .25s; }
+  .team-link{ display:block; width:100%; height:100%; position:absolute; inset:0; cursor:pointer; border:0; background:transparent; padding:0; }
+  .team-link::after{ content:"Lees meer \2192"; position:absolute; left:0; right:0; bottom:0; padding:30px 14px 12px; font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:#fff; background:linear-gradient(transparent, rgba(4,7,12,.9)); opacity:0; transform:translateY(6px); transition:opacity .25s, transform .25s; pointer-events:none; }
   .team-photo:hover .team-link::after{ opacity:1; transform:translateY(0); }
   .team-photo:hover img{ transform:scale(1.04); }
+
+  /* ---------- Team bio lightbox ---------- */
+  .bio-modal{ position:fixed; inset:0; z-index:120; display:flex; align-items:center; justify-content:center; padding:clamp(16px,4vw,48px); opacity:0; pointer-events:none; transition:opacity .3s ease; }
+  .bio-modal.open{ opacity:1; pointer-events:auto; }
+  .bio-modal-bg{ position:absolute; inset:0; background:rgba(2,4,8,.78); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
+  .bio-card{ position:relative; width:min(880px,100%); max-height:88vh; overflow:hidden; display:grid; grid-template-columns:minmax(0,0.92fr) minmax(0,1.08fr); background:var(--surface); border:1px solid var(--line-strong); border-radius:18px; box-shadow:0 40px 120px rgba(0,0,0,.6); transform:translateY(18px) scale(.97); transition:transform .35s cubic-bezier(.22,1,.36,1); }
+  .bio-modal.open .bio-card{ transform:none; }
+  @media(max-width:720px){ .bio-card{ grid-template-columns:1fr; max-height:92vh; } }
+  .bio-figure{ position:relative; min-height:340px; background:var(--surface-2); overflow:hidden; }
+  .bio-figure img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 18%; }
+  .bio-figure::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, transparent 55%, rgba(4,7,12,.55)); }
+  @media(max-width:720px){ .bio-figure{ min-height:280px; } }
+  .bio-figure .tag{ position:absolute; left:16px; bottom:16px; z-index:2; font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-2); }
+  .bio-body{ padding:clamp(26px,3vw,40px); overflow-y:auto; display:flex; flex-direction:column; }
+  .bio-body .nm{ font-family:var(--display); font-weight:600; font-size:26px; line-height:1.1; letter-spacing:-.01em; }
+  .bio-body .rl{ font-family:var(--mono); font-size:12px; letter-spacing:.06em; color:var(--muted); margin-top:6px; }
+  .bio-q{ margin-top:24px; }
+  .bio-q .lbl{ font-family:var(--mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent); display:flex; align-items:center; gap:8px; margin-bottom:9px; }
+  .bio-q .lbl::before{ content:""; width:18px; height:1px; background:var(--accent); }
+  .bio-q blockquote{ margin:0; font-family:var(--display); font-weight:500; font-size:17px; line-height:1.5; color:var(--steel); }
+  .bio-q + .bio-q{ margin-top:22px; padding-top:22px; border-top:1px solid var(--line); }
+  .bio-foot{ margin-top:auto; padding-top:26px; }
+  .bio-mail{ display:inline-flex; align-items:center; gap:8px; font-family:var(--mono); font-size:12px; letter-spacing:.04em; color:var(--accent-2); }
+  .bio-mail:hover{ color:var(--accent); }
+  .bio-close{ position:absolute; top:12px; right:12px; z-index:3; width:38px; height:38px; border-radius:50%; border:1px solid var(--line-strong); background:rgba(4,7,12,.6); color:var(--text); display:grid; place-items:center; cursor:pointer; transition:background .2s, transform .2s; }
+  .bio-close:hover{ background:var(--accent); border-color:var(--accent); transform:rotate(90deg); }
   .person[id]{ scroll-margin-top:90px; border-radius:12px; transition:background .4s; }
   .person[id]:target{ background:rgba(224,82,31,.14); }
   .grid-3{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin-top:48px; }
@@ -489,10 +515,11 @@
   <div class="wrap">
     <div class="section-eyebrow">Het team</div>
     <h2 class="section-title">Mensen die u rechtstreeks spreekt.</h2>
+    <p class="section-lede" style="margin-bottom:34px;">Klik op een portret voor de achtergrond en ambities van elk teamlid.</p>
     <div class="grid-3">
-      <div class="feature"><div class="team-photo"><img src="images/team/Willem.jpeg" alt="Willem van der Heijden" loading="lazy" /><a class="team-link" href="#contact-willem" aria-label="Contactgegevens van Willem van der Heijden" style="font-size: 10px; height: 285px; opacity: 0"></a></div><div class="role-tag">Verkoop</div><h3>Willem van der Heijden</h3><p>Eerste aanspreekpunt voor operators en pilots.</p></div>
-      <div class="feature"><div class="team-photo"><img src="images/team/Gertjan.jpeg" alt="Gertjan van den Bogaert" loading="lazy" /><a class="team-link" href="#contact-gertjan" aria-label="Contactgegevens van Gertjan van den Bogaert"></a></div><div class="role-tag">Planning</div><h3>Gertjan van den Bogaert</h3><p>Installatie-inschatting en uitrol over uw netwerk.</p></div>
-      <div class="feature"><div class="team-photo"><img src="images/team/Daniel.jpeg" alt="Daniël Telgen" loading="lazy" /><a class="team-link" href="#contact-daniel" aria-label="Contactgegevens van Daniël Telgen"></a></div><div class="role-tag">Techniek</div><h3>Daniël Telgen</h3><p>Sensor, edge-AI en integratie met uw systemen.</p></div>
+      <div class="feature"><div class="team-photo"><img src="images/team/Willem.jpeg" alt="Willem van der Heijden" loading="lazy" /><button class="team-link" data-person="willem" aria-label="Meer over Willem van der Heijden"></button></div><div class="role-tag">Verkoop</div><h3>Willem van der Heijden</h3><p>Eerste aanspreekpunt voor operators en pilots.</p></div>
+      <div class="feature"><div class="team-photo"><img src="images/team/Gertjan.jpeg" alt="Gertjan van den Bogaert" loading="lazy" /><button class="team-link" data-person="gertjan" aria-label="Meer over Gertjan van den Bogaert"></button></div><div class="role-tag">Planning</div><h3>Gertjan van den Bogaert</h3><p>Installatie-inschatting en uitrol over uw netwerk.</p></div>
+      <div class="feature"><div class="team-photo"><img src="images/team/Daniel.jpeg" alt="Daniël Telgen" loading="lazy" /><button class="team-link" data-person="daniel" aria-label="Meer over Daniël Telgen"></button></div><div class="role-tag">Techniek</div><h3>Daniël Telgen</h3><p>Sensor, edge-AI en integratie met uw systemen.</p></div>
     </div>
   </div>
 </section>
@@ -503,7 +530,7 @@
     <div class="section-eyebrow">In het kort</div>
     <h2 class="section-title">Stepguard B.V.</h2>
     <div class="factrow">
-      <div class="stat"><div class="v">2026</div><div class="l">Cboost spin-off</div></div>
+      <div class="stat"><div class="v">2024</div><div class="l">Cboost spin-off</div></div>
       <div class="stat"><div class="v">Cromvoirt</div><div class="l">Gevestigd in NL</div></div>
       <div class="stat"><div class="v">Benelux</div><div class="l">Pilots bij de NS</div></div>
       <div class="stat"><div class="v">EU</div><div class="l">Data-hosting &amp; AI Act</div></div>
@@ -526,7 +553,7 @@
       <a class="benefit" href="Sustainability.html#social">
         <div class="bn">02</div>
         <h4>Veiligheid</h4>
-        <p>Zie slijtage voordat een trede faalt. Bescherm passagiers die het meest afhankelijk zijn.</p>
+        <p>Zie slijtage weken voordat een trede faalt. Bescherm passagiers die het meest afhankelijk zijn.</p>
         <span class="bl">Naar duurzaamheid →</span>
       </a>
       <a class="benefit" href="Sustainability.html#economic">
@@ -627,31 +654,31 @@
       <p>Plan een korte demo of een installatie-inschatting. Stuur direct een bericht naar de juiste persoon, of vul het formulier in. We reageren binnen twee werkdagen, in het Nederlands, Engels of Duits.</p>
       <div class="people">
         <div class="person" id="contact-willem">
-          <div class="avatar" aria-hidden="true"><img src="images/team/Willem.jpeg" alt="" loading="lazy" /></div>
+          <div class="avatar" aria-hidden="true"><img src="images/team/willem.jpeg" alt="" loading="lazy" /></div>
           <div class="info">
             <span class="role">Verkoop</span>
             <span class="name">Willem van der Heijden</span>
-            <a class="email" href="mailto:willem@stepguard.nl">willem@stepguard.nl</a>
+            <a class="email" href="/cdn-cgi/l/email-protection#e99e8085858c84a99a9d8c998e9c889b8dc78785"><span class="__cf_email__" data-cfemail="e5928c89898088a5969180958290849781cb8b89">[email&#160;protected]</span></a>
           </div>
-          <a class="arrow-btn" href="mailto:willem@stepguard.nl" aria-label="Mail Willem">→</a>
+          <a class="arrow-btn" href="/cdn-cgi/l/email-protection#c0b7a9acaca5ad80b3b4a5b0a7b5a1b2a4eeaeac" aria-label="Mail Willem">→</a>
         </div>
         <div class="person" id="contact-gertjan">
-          <div class="avatar" aria-hidden="true"><img src="images/team/Gertjan.jpeg" alt="" loading="lazy" /></div>
+          <div class="avatar" aria-hidden="true"><img src="images/team/gertjan.jpeg" alt="" loading="lazy" /></div>
           <div class="info">
             <span class="role">Planning</span>
             <span class="name">Gertjan van den Bogaert</span>
-            <a class="email" href="mailto:gertjan@stepguard.nl">gertjan@stepguard.nl</a>
+            <a class="email" href="/cdn-cgi/l/email-protection#55323027213f343b152621302532203427317b3b39"><span class="__cf_email__" data-cfemail="c1a6a4b3b5aba0af81b2b5a4b1a6b4a0b3a5efafad">[email&#160;protected]</span></a>
           </div>
-          <a class="arrow-btn" href="mailto:gertjan@stepguard.nl" aria-label="Mail Gertjan">→</a>
+          <a class="arrow-btn" href="/cdn-cgi/l/email-protection#f0979582849a919eb0838495809785918294de9e9c" aria-label="Mail Gertjan">→</a>
         </div>
         <div class="person" id="contact-daniel">
-          <div class="avatar" aria-hidden="true"><img src="images/team/Daniel.jpeg" alt="" loading="lazy" /></div>
+          <div class="avatar" aria-hidden="true"><img src="images/team/daniel.jpeg" alt="" loading="lazy" /></div>
           <div class="info">
             <span class="role">Techniek</span>
             <span class="name">Daniël Telgen</span>
-            <a class="email" href="mailto:daniel@stepguard.nl">daniel@stepguard.nl</a>
+            <a class="email" href="/cdn-cgi/l/email-protection#5f3b3e31363a331f2c2b3a2f382a3e2d3b713133"><span class="__cf_email__" data-cfemail="97f3f6f9fef2fbd7e4e3f2e7f0e2f6e5f3b9f9fb">[email&#160;protected]</span></a>
           </div>
-          <a class="arrow-btn" href="mailto:daniel@stepguard.nl" aria-label="Mail Daniël">→</a>
+          <a class="arrow-btn" href="/cdn-cgi/l/email-protection#9afefbf4f3fff6dae9eeffeafdeffbe8feb4f4f6" aria-label="Mail Daniël">→</a>
         </div>
       </div>
       <div class="address-block">
@@ -669,7 +696,7 @@
         </div>
       </div>
     </div>
-    <form class="cta-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Bedankt, we nemen contact op'; this.querySelector('button').disabled=true;">
+    <form class="cta-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent=(window.SGI18N?window.SGI18N.t('Bedankt, we nemen contact op'):'Bedankt, we nemen contact op'); this.querySelector('button').disabled=true;">
       <div class="row2">
         <input type="text" placeholder="Voornaam" required />
         <input type="text" placeholder="Operator / bedrijf" required />
@@ -687,8 +714,98 @@
   <div>Voorspellend toezicht · sensor · edge-AI · asset-platform</div>
 </footer>
 
-<script src="arrange.js"></script>
-  <script src="i18n.js"></script>
+<!-- Team bio lightbox -->
+<div class="bio-modal" id="bioModal" role="dialog" aria-modal="true" aria-labelledby="bioName">
+  <div class="bio-modal-bg" data-bio-close></div>
+  <div class="bio-card">
+    <button class="bio-close" data-bio-close aria-label="Sluiten">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+    </button>
+    <div class="bio-figure"><img id="bioImg" alt="" /><span class="tag" id="bioTag"></span></div>
+    <div class="bio-body">
+      <div class="nm" id="bioName"></div>
+      <div class="rl" id="bioRole"></div>
+      <div class="bio-q">
+        <div class="lbl">Achtergrond</div>
+        <blockquote id="bioBg"></blockquote>
+      </div>
+      <div class="bio-q">
+        <div class="lbl">Ambitie voor Stepguard</div>
+        <blockquote id="bioAmb"></blockquote>
+      </div>
+      <div class="bio-foot"><a class="bio-mail" id="bioMail" href="#"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg><span id="bioMailTxt"></span></a></div>
+    </div>
+  </div>
+</div>
 
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+(function teamBios(){
+  var PEOPLE = {
+    willem: {
+      name: 'Willem van der Heijden', role: 'Verkoop · operators & pilots',
+      tag: 'Verkoop', img: 'images/team/willem.jpeg', mail: 'willem@stepguard.nl',
+      bg: '\u201CIk heb jaren aan de andere kant van de tafel gezeten, bij operators die brandjes blusten op het slechtst denkbare moment. Die frustratie ken ik van binnenuit, en die taal spreek ik.\u201D',
+      amb: '\u201CMijn doel is dat elke vervoerder in de Benelux en Duitsland Stepguard kent als de standaard. Niet als nog een sensor, maar als de reden dat hun roltrappen \u00e9cht blijven draaien.\u201D'
+    },
+    gertjan: {
+      name: 'Gertjan van den Bogaert', role: 'Planning · installatie & uitrol',
+      tag: 'Planning', img: 'images/team/gertjan.jpeg', mail: 'gertjan@stepguard.nl',
+      bg: '\u201CDecennia onderhoud en logistiek hebben me \u00e9\u00e9n ding geleerd: een goede installatie valt of staat bij de voorbereiding. Ik wil weten hoe uw netwerk \u00e9cht werkt voordat we ook maar \u00e9\u00e9n box ophangen.\u201D',
+      amb: '\u201CIk wil bewijzen dat je honderden roltrappen kunt uitrusten zonder \u00e9\u00e9n rit te verstoren. Een uitrol die zo soepel verloopt dat de reiziger er niets van merkt, dat is voor mij geslaagd.\u201D'
+    },
+    daniel: {
+      name: 'Dani\u00ebl Telgen', role: 'Techniek · sensor, edge-AI & integratie',
+      tag: 'Techniek', img: 'images/team/daniel.jpeg', mail: 'daniel@stepguard.nl',
+      bg: '\u201CIk kom uit de wereld van vision en machine learning, en heb modellen op duizenden uren echte roltrap-beelden getraind. Slijtage is geen aanname meer, het is meetbaar geworden.\u201D',
+      amb: '\u201CMijn ambitie is een model dat een tredebreuk weken van tevoren ziet aankomen, betrouwbaar genoeg dat een operator erop durft te plannen. AI die voorstelt, de mens die beslist.\u201D'
+    }
+  };
+  var modal = document.getElementById('bioModal');
+  if (!modal) return;
+  var imgEl = document.getElementById('bioImg'),
+      tagEl = document.getElementById('bioTag'),
+      nameEl = document.getElementById('bioName'),
+      roleEl = document.getElementById('bioRole'),
+      bgEl = document.getElementById('bioBg'),
+      ambEl = document.getElementById('bioAmb'),
+      mailEl = document.getElementById('bioMail'),
+      mailTxt = document.getElementById('bioMailTxt');
+  var lastFocus = null;
+
+  function open(key){
+    var p = PEOPLE[key];
+    if (!p) return;
+    imgEl.src = p.img; imgEl.alt = p.name;
+    tagEl.textContent = p.tag;
+    nameEl.textContent = p.name;
+    roleEl.textContent = p.role;
+    bgEl.textContent = p.bg;
+    ambEl.textContent = p.amb;
+    mailEl.href = 'mailto:' + p.mail;
+    mailTxt.textContent = p.mail;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    lastFocus = document.activeElement;
+    modal.querySelector('.bio-close').focus();
+  }
+  function close(){
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  document.querySelectorAll('.team-link[data-person]').forEach(function(b){
+    b.addEventListener('click', function(){ open(b.dataset.person); });
+  });
+  modal.querySelectorAll('[data-bio-close]').forEach(function(el){
+    el.addEventListener('click', close);
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && modal.classList.contains('open')) close();
+  });
+})();
+</script>
+
+<script src="i18n.js"></script>
+<script src="arrange.js"></script>
 </body>
 </html>
