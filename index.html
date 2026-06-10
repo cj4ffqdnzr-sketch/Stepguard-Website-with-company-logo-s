@@ -282,40 +282,70 @@
   .levels .lv.l2.on{ background: var(--warn); border-color: var(--warn); }
   .levels .lv.l3.on{ background: var(--hot); border-color: var(--hot); color: #fff; }
   .levels .lv.l4.on{ background: var(--laser); border-color: var(--laser); color: #fff; box-shadow:0 0 12px var(--laser-glow) }
+  .hud[data-level="4"] .dot{ background: var(--laser); box-shadow: 0 0 10px var(--laser-glow); }
 
-.hud[data-level="4"] .dot{ background: var(--laser); box-shadow: 0 0 10px var(--laser-glow); }
+  /* ---------- Hero scene cards (wear → alert → planned fix) ---------- */
+  .scene-cards{ position:absolute; top:50px; left:18px; width:min(62%, 292px); z-index:3; pointer-events:none; }
+  .scene-card{
+    position:absolute; top:0; left:0; width:100%;
+    background: rgba(8,14,22,.84);
+    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    border:1px solid var(--line-strong); border-radius:10px;
+    padding:12px 14px 13px;
+    opacity:0; transform: translateY(-8px);
+    transition: opacity .45s ease, transform .45s ease;
+  }
+  .scene-card.show{ opacity:1; transform:none; }
+  .scene-card.is-warn{ border-color: rgba(245,194,77,.45); }
+  .scene-card.is-hot{ border-color: rgba(214,63,43,.55); }
+  .scene-card.is-ok{ border-color: rgba(27,143,74,.55); }
+  .sc-eyebrow{ font-family:var(--mono); font-size:9px; letter-spacing:.16em; text-transform:uppercase; color:rgba(255,255,255,.85); display:flex; align-items:center; gap:7px; }
+  .sc-eyebrow::before{ content:''; flex:0 0 auto; width:7px; height:7px; border-radius:50%; background:var(--warn); box-shadow:0 0 8px var(--warn); animation: blink 1.4s infinite; }
+  .scene-card.is-hot .sc-eyebrow::before{ background:var(--hot); box-shadow:0 0 8px var(--hot); }
+  .scene-card.is-ok .sc-eyebrow::before{ background:var(--ok); box-shadow:0 0 8px var(--ok); animation:none; }
+  .sc-title{ font-family:var(--display); font-weight:650; font-size:14.5px; line-height:1.35; color:#fff; margin-top:7px; }
+  .sc-meta{ font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:rgba(255,255,255,.8); margin-top:5px; }
+  .wear-ring{ animation: wearPulse 1.6s ease-in-out infinite; }
+  @keyframes wearPulse{ 0%,100%{ stroke-opacity:.95 } 50%{ stroke-opacity:.2 } }
+  .scan-tick{ animation: tickFade .9s ease forwards; }
+  @keyframes tickFade{ 0%{ opacity:0 } 15%{ opacity:1 } 100%{ opacity:0 } }
+  @media (prefers-reduced-motion: reduce){
+    .scene-card{ transition:none; }
+    .sc-eyebrow::before{ animation:none; }
+    .wear-ring{ animation:none; }
+  }
 
-/* Hero scene cards (wear → alert → planned fix) */
-.scene-cards{ position:absolute; top:50px; left:18px; width:min(62%, 292px); z-index:3; pointer-events:none; }
-.scene-card{
-  position:absolute; top:0; left:0; width:100%;
-  background: rgba(8,14,22,.84);
-  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
-  border:1px solid var(--line-strong); border-radius:10px;
-  padding:12px 14px 13px;
-  opacity:0; transform: translateY(-8px);
-  transition: opacity .45s ease, transform .45s ease;
-}
-.scene-card.show{ opacity:1; transform:none; }
-.scene-card.is-warn{ border-color: rgba(245,194,77,.45); }
-.scene-card.is-hot{ border-color: rgba(214,63,43,.55); }
-.scene-card.is-ok{ border-color: rgba(27,143,74,.55); }
-.sc-eyebrow{ font-family:var(--mono); font-size:9px; letter-spacing:.16em; text-transform:uppercase; color:rgba(255,255,255,.85); display:flex; align-items:center; gap:7px; }
-.sc-eyebrow::before{ content:''; flex:0 0 auto; width:7px; height:7px; border-radius:50%; background:var(--warn); box-shadow:0 0 8px var(--warn); animation: blink 1.4s infinite; }
-.scene-card.is-hot .sc-eyebrow::before{ background:var(--hot); box-shadow:0 0 8px var(--hot); }
-.scene-card.is-ok .sc-eyebrow::before{ background:var(--ok); box-shadow:0 0 8px var(--ok); animation:none; }
-.sc-title{ font-family:var(--display); font-weight:650; font-size:14.5px; line-height:1.35; color:#fff; margin-top:7px; }
-.sc-meta{ font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:rgba(255,255,255,.8); margin-top:5px; }
-.wear-ring{ animation: wearPulse 1.6s ease-in-out infinite; }
-@keyframes wearPulse{ 0%,100%{ stroke-opacity:.95 } 50%{ stroke-opacity:.2 } }
-.scan-tick{ animation: tickFade .9s ease forwards; }
-@keyframes tickFade{ 0%{ opacity:0 } 15%{ opacity:1 } 100%{ opacity:0 } }
-@media (prefers-reduced-motion: reduce){
-  .scene-card{ transition:none; }
-  .sc-eyebrow::before{ animation:none; }
-  .wear-ring{ animation:none; }
-}
+  /* ---------- Ticker ---------- */
+  .ticker{
+    margin-top: 56px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    overflow: hidden; padding: 14px 0; background: var(--bg-2);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .ticker-track{
+    display:flex; gap: 56px; width: max-content;
+    animation: scroll 40s linear infinite;
+    font-family: var(--mono); font-size: 13px; letter-spacing: .04em; color: var(--steel);
+    white-space: nowrap;
+  }
+  .ticker-track span{ color: var(--accent-2); margin-right: 8px;}
+  @keyframes scroll{ from{transform: translateX(0)} to{transform: translateX(-50%)} }
 
+  /* ---------- Section heading ---------- */
+  .section{ padding: 120px 0; }
+  @media (max-width: 768px){ .section{ padding: 80px 0; } }
+  .section-eyebrow{
+    font-family: var(--mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--accent-2); display:flex;align-items:center;gap:12px;
+  }
+  .section-eyebrow::before{ display:none; }
+  h2.section-title{
+    font-family: var(--display); font-weight: 600;
+    font-size: clamp(34px, 4.4vw, 60px);
+    line-height: 1.02; letter-spacing: -.028em;
+    margin: 14px 0 0; max-width: 18ch; text-wrap: balance;
+  }
+  .section-lede{ color: var(--steel); margin-top: 22px; font-size: 17px; line-height: 1.55; max-width: 60ch; }
 
   /* ---------- Problem strip ---------- */
   .problem{
@@ -1710,8 +1740,8 @@
     <div class="partners reveal">
       <div class="partner-cell label" data-i18n="partners_label">In ontwikkeling met</div>
       <div class="partner-cell"><strong>NS Stations</strong></div>
- <img src="images/team/ProRail_logo.svg" alt="Sensor unit" class="gallery-img"> 
- <img src="images/team/Nederlandse_spoorwegen_logo.svg.png" alt="Sensor unit" class="gallery-img"> 
+      <div class="partner-cell"><span class="placeholder-label" data-i18n="partner_pl">/partner-logo</span></div>
+      <div class="partner-cell"><span class="placeholder-label" data-i18n="partner_pl">/partner-logo</span></div>
     </div>
 
   </div>
@@ -1756,14 +1786,14 @@
   <div class="wrap">
     <div class="quote-card reveal">
       <div class="quote-photo">
- <img src="images/team/Jeroen.jpeg" alt="Sensor unit" class="gallery-img"> 
+        <span class="ph" data-i18n="quote_ph">/foto · klant-portret.jpg</span>
       </div>
       <div class="quote-body">
         <div class="mark">&ldquo;</div>
         <blockquote data-i18n="quote_text">Stepguard laat ons onderhoud plannen in plaats van brandjes blussen. We zien slijtage aankomen, dat verandert hoe we onze stations runnen.</blockquote>
         <div class="by">
           <div>
-            <div class="nm">Jeroen Lommers</div>
+            <div class="nm">Sanne de Vries</div>
             <div class="ti" data-i18n="quote_role">Asset Manager · NS Stations</div>
           </div>
           <div class="quote-logo">NS</div>
@@ -1786,27 +1816,27 @@
           <div class="info">
             <span class="role" data-i18n="contact_role_sales">Verkoop</span>
             <span class="name">Willem van der Heijden</span>
-            <a class="email" href="mailto:willem@stepguard.nl">willem@stepguard.nl</a>
+            <a class="email" href="/cdn-cgi/l/email-protection#44332d28282129043730213423312536206a2a28"><span class="__cf_email__" data-cfemail="f98e9095959c94b98a8d9c899e8c988b9dd79795">[email&#160;protected]</span></a>
           </div>
-          <a class="arrow-btn" href="mailto:willem@stepguard.nl" aria-label="Mail Willem">→</a>
+          <a class="arrow-btn" href="/cdn-cgi/l/email-protection#4f382623232a220f3c3b2a3f283a2e3d2b612123" aria-label="Mail Willem">→</a>
         </div>
         <div class="person">
           <div class="avatar" aria-hidden="true">G</div>
           <div class="info">
             <span class="role" data-i18n="contact_role_planning">Planning</span>
             <span class="name">Gertjan van den Bogaert</span>
-            <a class="email" href="mailto:gertjan@stepguard.nl">gertjan@stepguard.nl</a>
+            <a class="email" href="/cdn-cgi/l/email-protection#0b6c6e797f616a654b787f6e7b6c7e6a796f256567"><span class="__cf_email__" data-cfemail="a1c6c4d3d5cbc0cfe1d2d5c4d1c6d4c0d3c58fcfcd">[email&#160;protected]</span></a>
           </div>
-          <a class="arrow-btn" href="mailto:gertjan@stepguard.nl" aria-label="Mail Gertjan">→</a>
+          <a class="arrow-btn" href="/cdn-cgi/l/email-protection#54333126203e353a142720312433213526307a3a38" aria-label="Mail Gertjan">→</a>
         </div>
         <div class="person">
           <div class="avatar" aria-hidden="true">D</div>
           <div class="info">
             <span class="role" data-i18n="contact_role_tech">Techniek</span>
             <span class="name">Daniël Telgen</span>
-            <a class="email" href="mailto:daniel@stepguard.nl">daniel@stepguard.nl</a>
+            <a class="email" href="/cdn-cgi/l/email-protection#076366696e626b4774736277607266756329696b"><span class="__cf_email__" data-cfemail="0a6e6b64636f664a797e6f7a6d7f6b786e246466">[email&#160;protected]</span></a>
           </div>
-          <a class="arrow-btn" href="mailto:daniel@stepguard.nl" aria-label="Mail Daniël">→</a>
+          <a class="arrow-btn" href="/cdn-cgi/l/email-protection#bdd9dcd3d4d8d1fdcec9d8cddac8dccfd993d3d1" aria-label="Mail Daniël">→</a>
         </div>
       </div>
 
@@ -1868,7 +1898,7 @@
     <div>
       <h6 data-i18n="foot_h_contact">Contact</h6>
       <a href="Contact.html" data-i18n="nav_contact">Contact</a>
-      <a href="mailto:hello@stepguard.com">hello@stepguard.com</a>
+      <a href="/cdn-cgi/l/email-protection#177f727b7b78576463726770627665733974787a"><span class="__cf_email__" data-cfemail="1078757c7c7f506364756077657162743e737f7d">[email&#160;protected]</span></a>
       <a href="#">Cromvoirt, NL</a>
       <a href="#">LinkedIn</a>
     </div>
@@ -1879,7 +1909,7 @@
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // ---- Site i18n (marketing shell) ----
   // Dutch is the source-of-truth in DOM; this dict maps to EN + DE.
   const SITE_I18N = {
@@ -1922,7 +1952,12 @@
       hud_t2: 'Step integrity scan · Level 2',
       hud_s2: 'Level 2, Tread wear detected · Step 09',
       hud_t3: 'Step integrity scan · Level 3',
-      hud_s3: 'Level 3, Surface fracture · Step 09 · Step 11',
+      hud_s3: 'Level 3, Alert sent · failure expected in ±3 weeks',
+      hud_t4: 'Planned fix · Work order WO-2231',
+      hud_s4: 'Maintenance scheduled · step 09 replaced before failure',
+      card_d_e: 'Detection · Cam SG-04-A', card_d_t: 'Edge wear · step 09', card_d_m: 'Depth 2.3 mm · 97% confidence',
+      card_a_e: 'Alert → platform', card_a_t: 'High priority · failure expected in ±3 weeks', card_a_m: 'Technician and part suggested automatically',
+      card_p_e: 'Scheduled · work order WO-2231', card_p_t: 'Step 09 replacement · Tuesday 06:00', card_p_m: 'Before rush hour · no unexpected downtime',
       prob_eyebrow: 'The cost of a missed step',
       prob_title: 'Escalators fail at the worst possible time, and the bill arrives <em>after</em>.',
       prob_news_date: '12 March 2026 · Berlin',
@@ -2003,7 +2038,12 @@
       hud_t2: 'Stufenintegritätsscan · Level 2',
       hud_s2: 'Level 2, Trittflächenabnutzung erkannt · Stufe 09',
       hud_t3: 'Stufenintegritätsscan · Level 3',
-      hud_s3: 'Level 3, Oberflächenbruch · Stufe 09 · Stufe 11',
+      hud_s3: 'Level 3, Alarm gesendet · Ausfall in ±3 Wochen erwartet',
+      hud_t4: 'Geplante Behebung · Auftrag WO-2231',
+      hud_s4: 'Wartung geplant · Stufe 09 wird vor Ausfall getauscht',
+      card_d_e: 'Erkennung · Cam SG-04-A', card_d_t: 'Kantenverschleiß · Stufe 09', card_d_m: 'Tiefe 2,3 mm · 97 % Konfidenz',
+      card_a_e: 'Alarm → Plattform', card_a_t: 'Hohe Priorität · Ausfall in ±3 Wochen erwartet', card_a_m: 'Techniker und Ersatzteil automatisch vorgeschlagen',
+      card_p_e: 'Geplant · Auftrag WO-2231', card_p_t: 'Tausch Stufe 09 · Dienstag 06:00', card_p_m: 'Vor der Stoßzeit · keine ungeplante Stillstandszeit',
       prob_eyebrow: 'Die Kosten einer übersehenen Stufe',
       prob_title: 'Eskalatoren fallen zum schlechtesten Zeitpunkt aus, und die Rechnung kommt <em>danach</em>.',
       prob_news_date: '12. März 2026 · Berlin',
@@ -2055,7 +2095,9 @@
     hud_t2: 'Trede-integriteitsscan · Niveau 2',
     hud_s2: 'Niveau 2, Trede-slijtage gedetecteerd · Trede 09',
     hud_t3: 'Trede-integriteitsscan · Niveau 3',
-    hud_s3: 'Niveau 3, Oppervlaktebreuk · Trede 09 · Trede 11',
+    hud_s3: 'Niveau 3, Alert verzonden · uitval verwacht ±3 weken',
+    hud_t4: 'Geplande fix · Werkorder WO-2231',
+    hud_s4: 'Onderhoud ingepland · trede 09 vervangen vóór storing',
     cta_thanks: 'Bedankt, we nemen contact op',
   };
   const SITE_NL_PH = {};
@@ -2114,185 +2156,189 @@
     nav.classList.toggle('scrolled', window.scrollY > 8);
   }, { passive: true });
 
-  // ---- Build steps in hero SVG ----
-  (function buildSteps(){
-    const g = document.getElementById('steps');
-    if (!g) return;
-    // We draw 11 steps going diagonally up-right
-    // Origin (40, 80) in svg, so place steps starting from bottom-left
-    const stepCount = 11;
-    const baseX = 10, baseY = 380; // bottom of staircase area (relative to translate)
-    const stepW = 46, stepH = 12, dx = 38, dy = -34;
-    for (let i = 0; i < stepCount; i++){
-      const x = baseX + i * dx;
-      const y = baseY + i * dy;
-      // step polygon (top + side face)
-      const poly = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      const d = `M ${x} ${y} L ${x+stepW} ${y} L ${x+stepW} ${y+stepH} L ${x} ${y+stepH} Z`;
-      poly.setAttribute('d', d);
-      poly.setAttribute('fill', 'url(#stepGrad)');
-      poly.setAttribute('stroke', 'url(#stepEdge)');
-      poly.setAttribute('stroke-width', '.8');
-      g.appendChild(poly);
-
-      // riser
-      const riser = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      riser.setAttribute('d', `M ${x+stepW} ${y} L ${x+stepW+dx*.18} ${y - 12}`);
-      riser.setAttribute('stroke', 'rgba(123,215,255,.18)');
-      riser.setAttribute('stroke-width', '1');
-      g.appendChild(riser);
-
-      // step number tick
-      const tx = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-      tx.setAttribute('x', x+2); tx.setAttribute('y', y-2);
-      tx.setAttribute('font-family', 'JetBrains Mono');
-      tx.setAttribute('font-size', '6');
-      tx.setAttribute('fill', 'rgba(123,215,255,.4)');
-      tx.setAttribute('letter-spacing', '0.5');
-      tx.setAttribute('data-step-label', String(14 - i));
-      tx.textContent = String(14 - i).padStart(2,'0');
-      g.appendChild(tx);
-
-      // wear marker placeholder, driven by scene cycler
-      const wear = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-      wear.setAttribute('x', x + 18); wear.setAttribute('y', y + 2);
-      wear.setAttribute('width', 18); wear.setAttribute('height', 7);
-      wear.setAttribute('rx', '1');
-      wear.setAttribute('data-wear-for', String(14 - i));
-      wear.setAttribute('opacity', '0');
-      wear.setAttribute('fill', '#F5C24D');
-      g.appendChild(wear);
-    }
-  })();
-
-  // ---- Laser sweep animation ----
-  (function laser(){
+  // ---- Hero movie: scan -> wear detected -> alert -> planned fix ----
+  (function heroMovie(){
+    const SVGNS = 'http://www.w3.org/2000/svg';
+    const stepsG = document.getElementById('steps');
     const beam = document.getElementById('laserBeam');
-    const dot = document.getElementById('laserDot');
-    if (!beam) return;
-    // Steps centers along diagonal, approximate target points
-    const targets = [];
-    for (let i = 0; i < 11; i++){
-      // Same math as buildSteps but in svg coordinates with translate(40,80)
-      const x = 40 + 10 + i * 38 + 23;
-      const y = 80 + 380 + i * -34 + 6;
-      targets.push([x,y]);
-    }
-    let idx = 0;
-    let t = 0;
-    function tick(){
-      t += 0.012;
-      if (t >= 1){
-        t = 0;
-        idx = (idx + 1) % targets.length;
-      }
-      const from = targets[idx];
-      const to = targets[(idx + 1) % targets.length];
-      const x = from[0] + (to[0] - from[0]) * t;
-      const y = from[1] + (to[1] - from[1]) * t;
-      const ox = 88, oy = 470;
-      beam?.setAttribute('d', `M ${ox} ${oy} L ${x} ${y}`);
-      const path2 = beam.nextElementSibling;
-      path2?.setAttribute('d', `M ${ox} ${oy} L ${x} ${y}`);
-      dot?.setAttribute('cx', x);
-      dot?.setAttribute('cy', y);
-      dot?.nextElementSibling?.setAttribute('cx', x);
-      dot?.nextElementSibling?.setAttribute('cy', y);
-      requestAnimationFrame(tick);
-    }
-    tick();
-  })();
-
-  // ---- Hero pilot scene cycler (cycles Level 1 → 2 → 3) ----
-  (function pilotScenes(){
     const hud = document.querySelector('.hero-stage .hud');
     const title = document.getElementById('hudTitle');
     const status = document.getElementById('hudStatus');
     const levels = document.getElementById('hudLevels');
-    const stepsG = document.getElementById('steps');
-    if (!hud || !title || !status || !levels || !stepsG) return;
+    const ticksG = document.getElementById('scanTicks');
+    const cards = {
+      2: document.getElementById('cardDetect'),
+      3: document.getElementById('cardAlert'),
+      4: document.getElementById('cardPlan')
+    };
+    if (!stepsG || !beam || !hud || !title || !status || !levels) return;
+    const beamCore = beam.nextElementSibling;
+    const dot = document.getElementById('laserDot');
+    const dotCore = dot ? dot.nextElementSibling : null;
 
-    const wearRects = stepsG.querySelectorAll('rect[data-wear-for]');
-    const stepLabels = stepsG.querySelectorAll('text[data-step-label]');
+    // Geometry inside #steps (group itself is translated to (40,80) in svg coords)
+    const SLOTS = 13, PX = 38, PY = -34, BASE_X = 10, BASE_Y = 380, W = 46, H = 12;
+    const GX = 40, GY = 80;
+    const PITCH_MS = 1800;        // one step passes the scanner every 1.8s
+    const OX = 88, OY = 470;      // sensor lens origin
+    const WORN_NO = 9;            // the step the story flags
 
-    // Scenes describe: HUD title/status, level pip, and wear markers per step
-    // Text comes from i18n keys (set by language switcher)
-    const scenes = [
-      {
-        level: 1,
-        titleKey: 'hud_t1',
-        statusKey: 'hud_s1',
-        wear: {},
-        highlightSteps: []
-      },
-      {
-        level: 2,
-        titleKey: 'hud_t2',
-        statusKey: 'hud_s2',
-        wear: { 9: { fill: '#F5C24D', opacity: .65 } },
-        highlightSteps: [9]
-      },
-      {
-        level: 3,
-        titleKey: 'hud_t3',
-        statusKey: 'hud_s3',
-        wear: {
-          9:  { fill: '#d63f2b', opacity: .85, w: 22 },
-          11: { fill: '#d63f2b', opacity: .7,  w: 14 }
-        },
-        highlightSteps: [9, 11]
-      }
-    ];
-
-    let i = 0;
-    function apply(scene){
-      hud.setAttribute('data-level', scene.level);
-      const ti = (window.__i18n_t || ((k)=>k));
-      title.textContent = ti(scene.titleKey);
-      status.textContent = ti(scene.statusKey);
-      // remember keys so the language switcher can re-translate on the fly
-      title.dataset.i18n = scene.titleKey;
-      status.dataset.i18n = scene.statusKey;
-
-      // Level pips
-      levels.querySelectorAll('.lv').forEach(el => {
-        const lv = +el.dataset.lv;
-        el.classList.toggle('on', lv <= scene.level);
-      });
-
-      // Wear rects, reset all, then apply scene wear
-      wearRects.forEach(r => {
-        const stepNum = +r.dataset.wearFor;
-        const w = scene.wear[stepNum];
-        if (w){
-          r.setAttribute('fill', w.fill);
-          if (w.w) r.setAttribute('width', w.w);
-          else r.setAttribute('width', 18);
-          // animate in
-          r.style.transition = 'opacity .5s ease';
-          r.setAttribute('opacity', w.opacity);
-        } else {
-          r.style.transition = 'opacity .5s ease';
-          r.setAttribute('opacity', 0);
-        }
-      });
-
-      // Step number highlight
-      stepLabels.forEach(t => {
-        const stepNum = +t.dataset.stepLabel;
-        const highlighted = scene.highlightSteps.includes(stepNum);
-        t.setAttribute('fill', highlighted
-          ? (scene.level === 3 ? '#d63f2b' : '#FFC74D')
-          : 'rgba(123,215,255,.4)');
-      });
+    function mk(tag, attrs){
+      const n = document.createElementNS(SVGNS, tag);
+      for (const k in attrs) n.setAttribute(k, attrs[k]);
+      return n;
     }
 
-    apply(scenes[0]);
-    setInterval(() => {
-      i = (i + 1) % scenes.length;
-      apply(scenes[i]);
-    }, 3200);
+    // Build 13 travelling step groups (12 visible + 1 for seamless wrap)
+    const slots = [];
+    for (let j = 0; j < SLOTS; j++){
+      const g = mk('g', {});
+      const plate = mk('path', { d: 'M 0 0 L ' + W + ' 0 L ' + W + ' ' + H + ' L 0 ' + H + ' Z',
+        fill: 'url(#stepGrad)', stroke: 'url(#stepEdge)', 'stroke-width': '.8' });
+      const riser = mk('path', { d: 'M ' + W + ' 0 L ' + (W + PX * 0.18) + ' -12',
+        stroke: 'rgba(123,215,255,.18)', 'stroke-width': '1' });
+      const label = mk('text', { x: 2, y: -2, 'font-family': 'JetBrains Mono', 'font-size': '6',
+        fill: 'rgba(123,215,255,.4)', 'letter-spacing': '0.5' });
+      const wear = mk('rect', { x: 14, y: 2, width: 18, height: 7, rx: 1, fill: '#F5C24D', opacity: 0 });
+      const ring = mk('rect', { x: 10, y: -2, width: 26, height: 15, rx: 3, fill: 'none',
+        stroke: '#F5C24D', 'stroke-width': '1', opacity: 0, 'class': 'wear-ring' });
+      g.appendChild(plate); g.appendChild(riser); g.appendChild(label); g.appendChild(wear); g.appendChild(ring);
+      stepsG.appendChild(g);
+      slots.push({ g: g, label: label, wear: wear, ring: ring, shownNo: null });
+    }
+
+    const wrapNo = function(n){ return ((n - 1) % 14 + 14) % 14 + 1; };
+    // Step identities: numbers descend as steps climb; fresh steps enter at the bottom
+    const ids = [];
+    for (let j = 0; j < SLOTS; j++) ids.push({ no: wrapNo(5 - j), worn: false });
+
+    const ti = function(k){ return (window.__i18n_t || function(x){ return x; })(k); };
+    let level = 1;
+    function setLevel(lv){
+      level = lv;
+      hud.setAttribute('data-level', String(lv));
+      title.textContent = ti('hud_t' + lv);
+      status.textContent = ti('hud_s' + lv);
+      title.dataset.i18n = 'hud_t' + lv;
+      status.dataset.i18n = 'hud_s' + lv;
+      levels.querySelectorAll('.lv').forEach(function(el){
+        el.classList.toggle('on', +el.dataset.lv <= lv);
+      });
+      for (const k in cards){
+        if (cards[k]) cards[k].classList.toggle('show', +k === lv);
+      }
+    }
+
+    // Wear patch styling per story phase
+    const WEAR_STYLES = {
+      1: { fill: '#F5C24D', op: .22, ring: null,      lab: null },
+      2: { fill: '#F5C24D', op: .85, ring: '#F5C24D', lab: '#FFC74D' },
+      3: { fill: '#d63f2b', op: .9,  ring: '#d63f2b', lab: '#d63f2b' },
+      4: { fill: '#1b8f4a', op: .6,  ring: '#1b8f4a', lab: '#3ddc84' }
+    };
+
+    let flashUntil = 0, flashColor = '#1b8f4a';
+    function tickFlash(color, txt, x, y){
+      flashUntil = performance.now() + 500;
+      flashColor = color;
+      if (!ticksG) return;
+      const t = mk('text', { x: x + 10, y: y - 10, fill: color, 'class': 'scan-tick',
+        'font-family': 'JetBrains Mono', 'font-size': '8' });
+      t.textContent = txt;
+      ticksG.appendChild(t);
+      setTimeout(function(){ t.remove(); }, 950);
+      while (ticksG.childNodes.length > 4) ticksG.firstChild.remove();
+    }
+
+    // Story beats are driven by steps crossing the scan zone (slot 2 at p = 0.5)
+    let crossN = 0, detectAt = -1;
+    function onCross(){
+      crossN++;
+      const id = ids[2];
+      const sx = GX + BASE_X + 1.5 * PX + 23, sy = GY + BASE_Y + 1.5 * PY + 4;
+      if (id.worn && level === 1){
+        detectAt = crossN;
+        setLevel(2);
+        tickFlash('#F5C24D', '! 2.3 mm', sx, sy);
+        return;
+      }
+      if (level === 2 && crossN === detectAt + 2) setLevel(3);
+      else if (level === 3 && crossN === detectAt + 5) setLevel(4);
+      else if (level === 4 && crossN === detectAt + 8){
+        ids.forEach(function(d){ d.worn = false; });
+        setLevel(1);
+      }
+      tickFlash('#1b8f4a', 'OK', sx, sy);
+    }
+
+    function render(p, now){
+      for (let j = 0; j < SLOTS; j++){
+        const s = j - 1 + p;
+        const sl = slots[j], id = ids[j];
+        sl.g.setAttribute('transform', 'translate(' + (BASE_X + s * PX).toFixed(2) + ', ' + (BASE_Y + s * PY).toFixed(2) + ')');
+        if (sl.shownNo !== id.no){
+          sl.shownNo = id.no;
+          sl.label.textContent = String(id.no).padStart(2, '0');
+        }
+        if (id.worn){
+          const st = WEAR_STYLES[level] || WEAR_STYLES[1];
+          sl.wear.setAttribute('fill', st.fill);
+          sl.wear.setAttribute('opacity', st.op);
+          if (st.ring){ sl.ring.setAttribute('stroke', st.ring); sl.ring.setAttribute('opacity', '1'); }
+          else sl.ring.setAttribute('opacity', '0');
+          sl.label.setAttribute('fill', st.lab || 'rgba(123,215,255,.4)');
+        } else {
+          sl.wear.setAttribute('opacity', '0');
+          sl.ring.setAttribute('opacity', '0');
+          sl.label.setAttribute('fill', 'rgba(123,215,255,.4)');
+        }
+      }
+      // Laser locks onto the step approaching the scan zone and sweeps across it
+      const st = p < 0.5 ? 1 + p : p;
+      const sweep = 14 * Math.sin(now / 260);
+      const tx = GX + BASE_X + st * PX + 23 + sweep;
+      const ty = GY + BASE_Y + st * PY + 4;
+      const d = 'M ' + OX + ' ' + OY + ' L ' + tx.toFixed(1) + ' ' + ty.toFixed(1);
+      beam.setAttribute('d', d);
+      if (beamCore) beamCore.setAttribute('d', d);
+      const hot = now < flashUntil;
+      if (dot){
+        dot.setAttribute('cx', tx.toFixed(1)); dot.setAttribute('cy', ty.toFixed(1));
+        dot.setAttribute('r', hot ? '5' : '3');
+        dot.setAttribute('fill', hot ? flashColor : '#d63f2b');
+      }
+      if (dotCore){ dotCore.setAttribute('cx', tx.toFixed(1)); dotCore.setAttribute('cy', ty.toFixed(1)); }
+    }
+
+    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    setLevel(1);
+    if (reduced){
+      // Static storyboard frame: wear already detected on step 09
+      for (let j = 0; j < SLOTS; j++) ids[j] = { no: wrapNo(WORN_NO + (6 - j)), worn: j === 6 };
+      setLevel(2);
+      render(0.3, 0);
+      return;
+    }
+    let p = 0, last = null;
+    function frame(ts){
+      if (last == null) last = ts;
+      const dt = Math.min(ts - last, 64);
+      last = ts;
+      const prev = p;
+      p += dt / PITCH_MS;
+      if (prev < 0.5 && p >= 0.5) onCross();
+      if (p >= 1){
+        p -= 1;
+        ids.pop();
+        const newNo = wrapNo(ids[0].no + 1);
+        ids.unshift({ no: newNo, worn: newNo === WORN_NO && level === 1 });
+      }
+      render(p, ts);
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
   })();
+
   (function ticker(){
     const itemsByLang = {
       nl: [
