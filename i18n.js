@@ -58,7 +58,7 @@
     ['elke trede', 'every step', 'jede Stufe'],
     ['ziet, en slijtage meldt vóór de storing.', 'and flags wear before the breakdown.', 'sieht und Verschleiß meldet, bevor die Störung eintritt.'],
     ['Stepguard is een industriële', 'Stepguard is an industrial', 'Stepguard ist eine industrielle'],
-    ['AI-vision sensorbox', 'AI-vision sensor box', 'AI-Vision-Sensorbox'],
+    ['Computer-vision sensorbox', 'Computer-vision sensor box', 'Computer-Vision-Sensorbox'],
     ['die onder de roltrap wordt gemonteerd. Hij inspecteert iedere passerende trede, herkent scheuren, randslijtage, plaat-misalignment en losse voorwerpen, en stuurt binnen een seconde een gescoorde melding naar een meertalig asset-platform.', 'that is mounted under the escalator. It inspects every passing step, recognising cracks, edge wear, plate misalignment and loose objects, and within a second sends a scored alert to a multilingual asset platform.', 'die unter der Rolltreppe montiert wird. Sie inspiziert jede vorbeilaufende Stufe, erkennt Risse, Kantenverschleiß, Platten-Fehlstellung und lose Gegenstände und sendet innerhalb einer Sekunde eine bewertete Meldung an eine mehrsprachige Asset-Plattform.'],
     ['Zonder de roltrap zelf aan te passen', 'Without modifying the escalator itself', 'Ohne die Rolltreppe selbst zu verändern'],
     ['en zonder verstoring van het bestaande onderhoudscontract.', 'and without disrupting the existing maintenance contract.', 'und ohne Störung des bestehenden Wartungsvertrags.'],
