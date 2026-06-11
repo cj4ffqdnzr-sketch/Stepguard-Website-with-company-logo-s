@@ -1656,6 +1656,7 @@
     </div>
   </div>
 </section>
+  
 <!-- ROI Calculator -->
 <div class="roi-calc reveal" id="roi-calc">
   <div class="roi-calc-head">
@@ -2958,63 +2959,78 @@
     render();
   })();
 
-  // ---- ROI Calculator ----
-  (function roiCalc(){
-    const DOWNTIME_REDUCTION = 0.70;
-    const STEP_REPLACE_REDUCTION = 0.50;
-    const FMT = {
-      nl: { currency: (n)=> '€ ' + Math.round(n).toLocaleString('nl-NL'), number: (n)=> n.toLocaleString('nl-NL'), hour:' u', per:' / roltrap / jaar' },
-      en: { currency: (n)=> '€ ' + Math.round(n).toLocaleString('en-GB'), number: (n)=> n.toLocaleString('en-GB'), hour:' h', per:' / escalator / year' },
-      de: { currency: (n)=> '€ ' + Math.round(n).toLocaleString('de-DE'), number: (n)=> n.toLocaleString('de-DE'), hour:' h', per:' / Rolltreppe / Jahr' }
-    };
-    const $ = (id)=> document.getElementById(id);
-    const inputs = {
-      escalators: $('roi-escalators'),
-      downtime: $('roi-downtime'),
-      downtimeCost: $('roi-downtime-cost'),
-      steps: $('roi-steps'),
-      stepCost: $('roi-step-cost')
-    };
-    if (!inputs.escalators) return;
-    const labels = {
-      escalators: $('roi-escalators-val'),
-      downtime: $('roi-downtime-val'),
-      downtimeCost: $('roi-downtime-cost-val'),
-      steps: $('roi-steps-val'),
-      stepCost: $('roi-step-cost-val')
-    };
-    function paintProgress(el){
-      const min = +el.min || 0, max = +el.max || 100, v = +el.value;
-      const pct = ((v - min) / (max - min)) * 100;
-      el.style.background = 'linear-gradient(to right, var(--accent) 0%, var(--accent) ' + pct + '%, var(--line-strong) ' + pct + '%, var(--line-strong) 100%)';
-    }
-    function recompute(){
-      const lang = document.documentElement.lang || 'nl';
-      const f = FMT[lang] || FMT.nl;
-      const esc = +inputs.escalators.value;
-      const dt = +inputs.downtime.value;
-      const dtc = +inputs.downtimeCost.value;
-      const st = +inputs.steps.value;
-      const stc = +inputs.stepCost.value;
-      labels.escalators.textContent = f.number(esc);
-      labels.downtime.textContent = f.number(dt) + f.hour;
-      labels.downtimeCost.textContent = f.currency(dtc);
-      labels.steps.textContent = f.number(st);
-      labels.stepCost.textContent = f.currency(stc);
-      const dtSav = esc * dt * dtc * DOWNTIME_REDUCTION;
-      const stSav = st * stc * STEP_REPLACE_REDUCTION;
-      const total = dtSav + stSav;
-      const per = esc > 0 ? total / esc : 0;
-      $('roi-total').textContent = f.currency(total);
-      $('roi-downtime-savings').textContent = f.currency(dtSav);
-      $('roi-step-savings').textContent = f.currency(stSav);
-      $('roi-per-escalator').textContent = f.currency(per) + f.per;
-      Object.values(inputs).forEach(paintProgress);
-    }
-    Object.values(inputs).forEach(el => el.addEventListener('input', recompute));
-    window.__roiRecompute = recompute;
-    recompute();
-  })();
+ (function roiCalc(){
+  // Constants
+  const DOWNTIME_REDUCTION = 0.70;           // 70% reduction in downtime
+  const STEP_MAINTENANCE_REDUCTION = 0.50;   // 50% reduction in step maintenance
+  const COST_PER_STEP = 120;                 // €120 per step per year
+  
+  // Get all input elements
+  const inputs = {
+    escalators: document.getElementById('roi-escalators'),
+    steps: document.getElementById('roi-steps'),
+    downtime: document.getElementById('roi-downtime'),
+    downtimeCost: document.getElementById('roi-downtime-cost')
+  };
+  
+  // Get all value display elements
+  const labels = {
+    escalators: document.getElementById('roi-escalators-val'),
+    steps: document.getElementById('roi-steps-val'),
+    downtime: document.getElementById('roi-downtime-val'),
+    downtimeCost: document.getElementById('roi-downtime-cost-val')
+  };
+  
+  // Function to draw progress bar on slider
+  function paintProgress(el){
+    const min = +el.min || 0;
+    const max = +el.max || 100;
+    const v = +el.value;
+    const pct = ((v - min) / (max - min)) * 100;
+    el.style.background = 'linear-gradient(to right, var(--accent) 0%, var(--accent) ' + pct + '%, var(--line-strong) ' + pct + '%, var(--line-strong) 100%)';
+  }
+  
+  // Main calculation function
+  function recompute(){
+    const esc = +inputs.escalators.value;
+    const steps = +inputs.steps.value;
+    const dt = +inputs.downtime.value;
+    const dtc = +inputs.downtimeCost.value;
+    
+    // Update displayed values
+    labels.escalators.textContent = esc;
+    labels.steps.textContent = steps;
+    labels.downtime.textContent = dt + ' u';
+    labels.downtimeCost.textContent = '€ ' + dtc;
+    
+    // CALCULATIONS:
+    // Downtime savings = escalators × downtime hours × cost per hour × 70% reduction
+    const dtSav = esc * dt * dtc * DOWNTIME_REDUCTION;
+    
+    // Step maintenance = total steps × €120 × 50% reduction
+    const stepMaintenance = steps * COST_PER_STEP;
+    const stSav = stepMaintenance * STEP_MAINTENANCE_REDUCTION;
+    
+    // Total savings
+    const total = dtSav + stSav;
+    const per = esc > 0 ? total / esc : 0;
+    
+    // Update result display
+    document.getElementById('roi-total').textContent = '€ ' + Math.round(total);
+    document.getElementById('roi-downtime-savings').textContent = '€ ' + Math.round(dtSav);
+    document.getElementById('roi-step-savings').textContent = '€ ' + Math.round(stSav);
+    document.getElementById('roi-per-escalator').textContent = '€ ' + Math.round(per) + ' / roltrap / jaar';
+    
+    // Update all slider progress bars
+    Object.values(inputs).forEach(paintProgress);
+  }
+  
+  // Listen to input changes
+  Object.values(inputs).forEach(el => el.addEventListener('input', recompute));
+  
+  // Initial calculation
+  recompute();
+})();
 
   // ---- Reveal on scroll ----
   const io = new IntersectionObserver((entries) => {
