@@ -1656,85 +1656,70 @@
     </div>
   </div>
 </section>
-
-<!-- ROI -->
-<section class="roi">
-  <div class="wrap">
-    <!-- Interactive ROI calculator -->
-    <div class="roi-calc reveal" id="roi-calc">
-      <div class="roi-calc-head">
-        <h3 data-i18n="roi_calc_title">Bereken uw jaarlijkse besparing.</h3>
-        <span class="tag" data-i18n="roi_calc_tag">Live · Indicatief</span>
+<!-- ROI Calculator -->
+<div class="roi-calc reveal" id="roi-calc">
+  <div class="roi-calc-head">
+    <h3 data-i18n="roi_calc_title">Bereken uw jaarlijkse besparing.</h3>
+    <span class="tag" data-i18n="roi_calc_tag">Live · Indicatief</span>
+  </div>
+  
+  <!-- 4 INPUT SLIDERS -->
+  <div class="roi-inputs">
+    <!-- 1. Amount of Escalators -->
+    <div class="roi-field">
+      <div class="roi-field-head">
+        <label for="roi-escalators">Aantal roltrappen</label>
+        <span class="value" id="roi-escalators-val">10</span>
       </div>
-      <div class="roi-inputs">
-        <div class="roi-field">
-          <div class="roi-field-head">
-            <label for="roi-escalators" data-i18n="roi_in_esc">Aantal roltrappen</label>
-            <span class="value" id="roi-escalators-val">10</span>
-          </div>
-          <input class="roi-slider" type="range" id="roi-escalators" min="1" max="100" step="1" value="10" />
-        </div>
-        <div class="roi-field">
-          <div class="roi-field-head">
-            <label for="roi-downtime" data-i18n="roi_in_dt">Uitval-uren per jaar (per roltrap)</label>
-            <span class="value" id="roi-downtime-val">40 u</span>
-          </div>
-          <input class="roi-slider" type="range" id="roi-downtime" min="0" max="200" step="5" value="40" />
-        </div>
-        <div class="roi-field">
-          <div class="roi-field-head">
-            <label for="roi-downtime-cost" data-i18n="roi_in_dtc">Kosten per uur uitval (€)</label>
-            <span class="value" id="roi-downtime-cost-val">€ 450</span>
-          </div>
-          <input class="roi-slider" type="range" id="roi-downtime-cost" min="50" max="2000" step="50" value="450" />
-        </div>
-        <div class="roi-field">
-          <div class="roi-field-head">
-            <label for="roi-steps" data-i18n="roi_in_st">Treden vervangen per jaar (totaal)</label>
-            <span class="value" id="roi-steps-val">80</span>
-          </div>
-          <input class="roi-slider" type="range" id="roi-steps" min="0" max="500" step="10" value="80" />
-        </div>
-        <div class="roi-field">
-          <div class="roi-field-head">
-            <label for="roi-step-cost" data-i18n="roi_in_stc">Kosten per trede (€)</label>
-            <span class="value" id="roi-step-cost-val">€ 600</span>
-          </div>
-          <input class="roi-slider" type="range" id="roi-step-cost" min="100" max="1500" step="50" value="600" />
-        </div>
+      <input class="roi-slider" type="range" id="roi-escalators" min="1" max="100" step="1" value="10" />
+    </div>
+    
+    <!-- 2. Total Steps -->
+    <div class="roi-field">
+      <div class="roi-field-head">
+        <label for="roi-steps">Totaal aantal treden</label>
+        <span class="value" id="roi-steps-val">800</span>
       </div>
+      <input class="roi-slider" type="range" id="roi-steps" min="100" max="5000" step="100" value="800" />
+    </div>
+    
+    <!-- 3. Downtime Hours per Year -->
+    <div class="roi-field">
+      <div class="roi-field-head">
+        <label for="roi-downtime">Uitval-uren per jaar</label>
+        <span class="value" id="roi-downtime-val">40 u</span>
+      </div>
+      <input class="roi-slider" type="range" id="roi-downtime" min="0" max="500" step="5" value="40" />
+    </div>
+    
+    <!-- 4. Cost per Hour of Downtime -->
+    <div class="roi-field">
+      <div class="roi-field-head">
+        <label for="roi-downtime-cost">Kosten per uur uitval (€)</label>
+        <span class="value" id="roi-downtime-cost-val">€ 450</span>
+      </div>
+      <input class="roi-slider" type="range" id="roi-downtime-cost" min="50" max="2000" step="50" value="450" />
+    </div>
+  </div>
 
-      <div class="roi-result">
-        <div class="roi-result-label" data-i18n="roi_out_label">Geschatte jaarlijkse besparing</div>
-        <div class="roi-result-big" id="roi-total">€ 0</div>
-        <div class="roi-result-sub" id="roi-per-escalator">€ 0 / roltrap / jaar</div>
+  <!-- RESULTS SECTION -->
+  <div class="roi-result">
+    <div class="roi-result-label">Geschatte jaarlijkse besparing</div>
+    <div class="roi-result-big" id="roi-total">€ 0</div>
+    <div class="roi-result-sub" id="roi-per-escalator">€ 0 / roltrap / jaar</div>
 
-        <div class="roi-breakdown">
-          <div>
-            <div class="lbl" data-i18n="roi_out_dt">Bespaard op uitval</div>
-            <div class="val" id="roi-downtime-savings">€ 0</div>
-          </div>
-          <div>
-            <div class="lbl" data-i18n="roi_out_st">Bespaard op trede-vervanging</div>
-            <div class="val" id="roi-step-savings">€ 0</div>
-          </div>
-        </div>
-
-        <div class="roi-assumptions">
-          <h5 data-i18n="roi_out_assum">Aannames</h5>
-          <ul>
-            <li data-i18n="roi_assum_1" data-i18n-html="1">Uitval-reductie met Stepguard: <strong style="color:var(--text)">70%</strong></li>
-            <li data-i18n="roi_assum_2" data-i18n-html="1">Reductie ongeplande trede-vervanging: <strong style="color:var(--text)">50%</strong></li>
-          </ul>
-        </div>
-
-        <p class="roi-disclaimer" data-i18n="roi_disclaimer">
-          Indicatieve berekening. Werkelijke besparing varieert per locatie, type roltrap en gebruikspatroon. We rekenen graag met u door op uw eigen cijfers.
-        </p>
-
-        <a class="btn btn-primary btn-arrow" href="#contact" data-i18n="roi_calc_cta">Plan een persoonlijke berekening&nbsp;</a>
+    <div class="roi-breakdown">
+      <div>
+        <div class="lbl">Bespaard op uitval</div>
+        <div class="val" id="roi-downtime-savings">€ 0</div>
+      </div>
+      <div>
+        <div class="lbl">Bespaard op trede-vervanging</div>
+        <div class="val" id="roi-step-savings">€ 0</div>
       </div>
     </div>
+  </div>
+</div>
 
     <!-- In ontwikkeling met -->
     <div class="partners reveal">
