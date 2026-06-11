@@ -284,6 +284,16 @@
   .levels .lv.l4.on{ background: var(--laser); border-color: var(--laser); color: #fff; box-shadow:0 0 12px var(--laser-glow) }
   .hud[data-level="4"] .dot{ background: var(--laser); box-shadow: 0 0 10px var(--laser-glow); }
 
+  /* Per-step wear strip, mirrors the platform's tread view */
+  .hud-strip{ grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: 9px; }
+  .hud-strip-head{ display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+  .hud-strip-head .t{ font-family: var(--mono); font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+  .hud-strip-head .avg{ font-family: var(--mono); font-size: 10px; color: var(--warn); }
+  .hud-bars{ display: flex; gap: 4px; align-items: flex-end; height: 26px; }
+  .hud-bars .hb{ flex: 1 1 0; position: relative; height: 100%; background: rgba(255,255,255,.06); border-radius: 2px; overflow: hidden; }
+  .hud-bars .hb i{ position: absolute; left: 0; right: 0; bottom: 0; border-radius: 2px; transition: height .5s ease, background .5s ease; }
+  .hud-bars .hb.hot i{ animation: blink 1.4s infinite; }
+
   /* ---------- Hero scene cards (wear → alert → planned fix) ---------- */
   .scene-cards{ position:absolute; top:50px; left:18px; width:min(62%, 292px); z-index:3; pointer-events:none; }
   .scene-card{
@@ -757,7 +767,7 @@
     padding: 120px 0;
   }
   .roi-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;}
-  @media(max-width:400px){.roi-grid{grid-template-columns:1fr; gap: 40px}}
+  @media(max-width:900px){.roi-grid{grid-template-columns:1fr; gap: 40px}}
   .compare{
     display:grid; grid-template-columns: 1fr 1fr; gap: 16px;
   }
@@ -766,7 +776,7 @@
     background: var(--surface);
     position: relative;
   }
-  .col.good{ background: linear-gradient(180deg, rgba(241,239,237,.06), rgba(0,0,0,.01)); border-color: rgba(241,240,239,.3);}
+  .col.good{ background: linear-gradient(180deg, rgba(224,82,31,.06), rgba(0,0,0,.01)); border-color: rgba(224,82,31,.3);}
   .col .tag{ font-family: var(--mono); font-size: 10px; letter-spacing: .14em; color: var(--muted); text-transform: uppercase;}
   .col.good .tag{ color: var(--accent-2);}
   .col .price{ font-family: var(--display); font-weight: 600; font-size: 44px; letter-spacing: -.025em; margin: 14px 0 4px;}
@@ -1656,78 +1666,86 @@
     </div>
   </div>
 </section>
-  
-<!-- ROI Calculator -->
-<div class="roi-calc reveal" id="roi-calc">
-  <div class="roi-calc-head">
-    <h3 data-i18n="roi_calc_title">Bereken uw jaarlijkse besparing.</h3>
-    <span class="tag" data-i18n="roi_calc_tag">Live · Indicatief</span>
-  </div>
-  
-  <!-- 4 INPUT SLIDERS -->
-  <div class="roi-inputs">
-    <!-- 1. Amount of Escalators -->
-    <div class="roi-field">
-      <div class="roi-field-head">
-        <label for="roi-escalators">Aantal roltrappen</label>
-        <span class="value" id="roi-escalators-val">10</span>
-      </div>
-      <input class="roi-slider" type="range" id="roi-escalators" min="1" max="100" step="1" value="10" />
-    </div>
-    
-    <!-- 2. Total Steps -->
-    <div class="roi-field">
-      <div class="roi-field-head">
-        <label for="roi-steps">Totaal aantal treden</label>
-        <span class="value" id="roi-steps-val">800</span>
-      </div>
-      <input class="roi-slider" type="range" id="roi-steps" min="100" max="5000" step="100" value="800" />
-    </div>
-    
-    <!-- 3. Downtime Hours per Year -->
-    <div class="roi-field">
-      <div class="roi-field-head">
-        <label for="roi-downtime">Uitval-uren per jaar</label>
-        <span class="value" id="roi-downtime-val">40 u</span>
-      </div>
-      <input class="roi-slider" type="range" id="roi-downtime" min="0" max="500" step="5" value="40" />
-    </div>
-    
-    <!-- 4. Cost per Hour of Downtime -->
-    <div class="roi-field">
-      <div class="roi-field-head">
-        <label for="roi-downtime-cost">Kosten per uur uitval (€)</label>
-        <span class="value" id="roi-downtime-cost-val">€ 450</span>
-      </div>
-      <input class="roi-slider" type="range" id="roi-downtime-cost" min="50" max="2000" step="50" value="450" />
-    </div>
-  </div>
 
-  <!-- RESULTS SECTION -->
-  <div class="roi-result">
-    <div class="roi-result-label">Geschatte jaarlijkse besparing</div>
-    <div class="roi-result-big" id="roi-total">€ 0</div>
-    <div class="roi-result-sub" id="roi-per-escalator">€ 0 / roltrap / jaar</div>
-
-    <div class="roi-breakdown">
-      <div>
-        <div class="lbl">Bespaard op uitval</div>
-        <div class="val" id="roi-downtime-savings">€ 0</div>
+<!-- ROI -->
+<section class="roi">
+  <div class="wrap">
+    <!-- Interactive ROI calculator -->
+    <div class="roi-calc reveal" id="roi-calc">
+      <div class="roi-calc-head">
+        <h3 data-i18n="roi_calc_title">Bereken uw jaarlijkse besparing.</h3>
+        <span class="tag" data-i18n="roi_calc_tag">Live · Indicatief</span>
       </div>
-      <div>
-        <div class="lbl">Bespaard op trede-vervanging</div>
-        <div class="val" id="roi-step-savings">€ 0</div>
+      <div class="roi-inputs">
+        <div class="roi-field">
+          <div class="roi-field-head">
+            <label for="roi-escalators" data-i18n="roi_in_esc">Aantal roltrappen</label>
+            <span class="value" id="roi-escalators-val">10</span>
+          </div>
+          <input class="roi-slider" type="range" id="roi-escalators" min="1" max="100" step="1" value="10" />
+        </div>
+        <div class="roi-field">
+          <div class="roi-field-head">
+            <label for="roi-steps" data-i18n="roi_in_st">Totaal aantal treden</label>
+            <span class="value" id="roi-steps-val">800</span>
+          </div>
+          <input class="roi-slider" type="range" id="roi-steps" min="100" max="5000" step="100" value="800" />
+        </div>
+        <div class="roi-field">
+          <div class="roi-field-head">
+            <label for="roi-downtime" data-i18n="roi_in_dt">Uitval-uren per jaar</label>
+            <span class="value" id="roi-downtime-val">40 u</span>
+          </div>
+          <input class="roi-slider" type="range" id="roi-downtime" min="0" max="500" step="5" value="40" />
+        </div>
+        <div class="roi-field">
+          <div class="roi-field-head">
+            <label for="roi-downtime-cost" data-i18n="roi_in_dtc">Kosten per uur uitval (€)</label>
+            <span class="value" id="roi-downtime-cost-val">€ 450</span>
+          </div>
+          <input class="roi-slider" type="range" id="roi-downtime-cost" min="50" max="2000" step="50" value="450" />
+        </div>
+      </div>
+
+      <div class="roi-result">
+        <div class="roi-result-label" data-i18n="roi_out_label">Geschatte jaarlijkse besparing</div>
+        <div class="roi-result-big" id="roi-total">€ 0</div>
+        <div class="roi-result-sub" id="roi-per-escalator">€ 0 / roltrap / jaar</div>
+
+        <div class="roi-breakdown">
+          <div>
+            <div class="lbl" data-i18n="roi_out_dt">Bespaard op uitval</div>
+            <div class="val" id="roi-downtime-savings">€ 0</div>
+          </div>
+          <div>
+            <div class="lbl" data-i18n="roi_out_st">Bespaard op trede-vervanging</div>
+            <div class="val" id="roi-step-savings">€ 0</div>
+          </div>
+        </div>
+
+        <div class="roi-assumptions">
+          <h5 data-i18n="roi_out_assum">Aannames</h5>
+          <ul>
+            <li data-i18n="roi_assum_1" data-i18n-html="1">Uitval-reductie met Stepguard: <strong style="color:var(--text)">70%</strong></li>
+            <li data-i18n="roi_assum_2" data-i18n-html="1">Reductie ongeplande trede-vervanging: <strong style="color:var(--text)">50%</strong></li>
+          </ul>
+        </div>
+
+        <p class="roi-disclaimer" data-i18n="roi_disclaimer">
+          Indicatieve berekening. Werkelijke besparing varieert per locatie, type roltrap en gebruikspatroon. We rekenen graag met u door op uw eigen cijfers.
+        </p>
+
+        <a class="btn btn-primary btn-arrow" href="#contact" data-i18n="roi_calc_cta">Plan een persoonlijke berekening&nbsp;</a>
       </div>
     </div>
-  </div>
-</div>
 
     <!-- In ontwikkeling met -->
     <div class="partners reveal">
       <div class="partner-cell label" data-i18n="partners_label">In ontwikkeling met</div>
       <div class="partner-cell"><strong>NS Stations</strong></div>
-    <img src="images/team/Nederlandse_spoorwegen_logo.svg.png" alt="Sensor unit" class="gallery-img"> 
-    <img src="images/team/ProRail_logo.svg" alt="Sensor unit" class="gallery-img"> 
+      <div class="partner-cell"><span class="placeholder-label" data-i18n="partner_pl">/partner-logo</span></div>
+      <div class="partner-cell"><span class="placeholder-label" data-i18n="partner_pl">/partner-logo</span></div>
+    </div>
 
   </div>
 </section>
@@ -1771,7 +1789,7 @@
   <div class="wrap">
     <div class="quote-card reveal">
       <div class="quote-photo">
-    <img src="images/team/Jeroen.jpeg" alt="Sensor unit" class="gallery-img"> 
+        <span class="ph" data-i18n="quote_ph">/foto · klant-portret.jpg</span>
       </div>
       <div class="quote-body">
         <div class="mark">&ldquo;</div>
@@ -1788,69 +1806,72 @@
   </div>
 </section>
 <!-- CONTACT -->
-<!-- CONTACT -->
 <section class="cta" id="contact">
-  <div class="cta-grid">
+  <div class="cta-grid" style="align-items: flex-start;">
     <div>
-      <div class="section-eyebrow" style="margin-bottom:18px;">Praat met ons</div>
-      <h2>Laten we kennismaken.</h2>
-      <p>Plan een korte demo of een installatie-inschatting. Stuur direct een bericht naar de juiste persoon, of vul het formulier in. We reageren binnen twee werkdagen, in het Nederlands, Engels of Duits.</p>
+      <div class="section-eyebrow" data-i18n="contact_eyebrow" style="margin-bottom:18px;">Praat met ons</div>
+      <h2 data-i18n="contact_title">Mail rechtstreeks met de juiste persoon.</h2>
+      <p data-i18n="contact_lede">Wilt u weten wat Stepguard voor uw roltrappen kan betekenen? Stuur direct een bericht naar de juiste persoon, of vul rechts het formulier in, we reageren binnen twee werkdagen.</p>
+
       <div class="people">
-        <div class="person" id="contact-willem">
-          <div class="avatar" aria-hidden="true"><img src="images/team/Willem.jpeg" alt="" loading="lazy" /></div>
+        <div class="person">
+          <div class="avatar" aria-hidden="true">W</div>
           <div class="info">
-            <span class="role">Verkoop</span>
+            <span class="role" data-i18n="contact_role_sales">Verkoop</span>
             <span class="name">Willem van der Heijden</span>
             <a class="email" href="mailto:willem@stepguard.nl">willem@stepguard.nl</a>
           </div>
           <a class="arrow-btn" href="mailto:willem@stepguard.nl" aria-label="Mail Willem">→</a>
         </div>
-        <div class="person" id="contact-gertjan">
-          <div class="avatar" aria-hidden="true"><img src="images/team/Gertjan.jpeg" alt="" loading="lazy" /></div>
+        <div class="person">
+          <div class="avatar" aria-hidden="true">G</div>
           <div class="info">
-            <span class="role">Planning</span>
+            <span class="role" data-i18n="contact_role_planning">Planning</span>
             <span class="name">Gertjan van den Bogaert</span>
             <a class="email" href="mailto:gertjan@stepguard.nl">gertjan@stepguard.nl</a>
           </div>
           <a class="arrow-btn" href="mailto:gertjan@stepguard.nl" aria-label="Mail Gertjan">→</a>
         </div>
-        <div class="person" id="contact-daniel">
-          <div class="avatar" aria-hidden="true"><img src="images/team/Daniel.jpeg" alt="" loading="lazy" /></div>
+        <div class="person">
+          <div class="avatar" aria-hidden="true">D</div>
           <div class="info">
-            <span class="role">Techniek</span>
+            <span class="role" data-i18n="contact_role_tech">Techniek</span>
             <span class="name">Daniël Telgen</span>
             <a class="email" href="mailto:daniel@stepguard.nl">daniel@stepguard.nl</a>
           </div>
           <a class="arrow-btn" href="mailto:daniel@stepguard.nl" aria-label="Mail Daniël">→</a>
         </div>
       </div>
+
       <div class="address-block">
         <div>
-          <div class="lbl">Adres</div>
+          <div class="lbl" data-i18n="contact_addr_lbl">Adres</div>
           <div class="val">Loverensestraat 31<br/>5266&nbsp;AN Cromvoirt<br/>Nederland</div>
         </div>
         <div>
-          <div class="lbl">KvK</div>
+          <div class="lbl" data-i18n="contact_kvk_lbl">KvK</div>
           <div class="val mono">42054745</div>
         </div>
         <div>
-          <div class="lbl">Bedrijf</div>
+          <div class="lbl" data-i18n="contact_company_lbl">Bedrijf</div>
           <div class="val">Stepguard B.V.</div>
         </div>
       </div>
     </div>
-    <form class="cta-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Bedankt, we nemen contact op'; this.querySelector('button').disabled=true;">
+
+    <form class="cta-form" data-i18n-form="1" onsubmit="event.preventDefault(); this.querySelector('button').textContent = (window.__i18n_t ? window.__i18n_t('cta_thanks') : 'Bedankt, we nemen contact op'); this.querySelector('button').disabled=true;">
       <div class="row2">
-        <input type="text" placeholder="Voornaam" required />
-        <input type="text" placeholder="Operator / bedrijf" required />
+        <input type="text" data-i18n-ph="cta_ph_name" placeholder="Voornaam" required />
+        <input type="text" data-i18n-ph="cta_ph_company" placeholder="Operator / bedrijf" required />
       </div>
-      <input type="email" placeholder="Zakelijk e-mailadres" required />
-      <input type="text" placeholder="Netwerkgrootte, ca. aantal roltrappen" />
-      <button class="btn btn-primary btn-arrow" type="submit">Demo aanvragen&nbsp;</button>
-      <div class="hint">Wij reageren in het Nederlands, Engels of Duits. Uw keuze.</div>
+      <input type="email" data-i18n-ph="cta_ph_email" placeholder="Zakelijk e-mailadres" required />
+      <input type="text" data-i18n-ph="cta_ph_size" placeholder="Netwerk­grootte, ca. aantal roltrappen" />
+      <button class="btn btn-primary btn-arrow" type="submit" data-i18n="cta_submit">Demo aanvragen&nbsp;</button>
+      <div class="hint" data-i18n="cta_hint">Wij reageren in het Nederlands, Engels of Duits, uw keuze.</div>
     </form>
   </div>
 </section>
+
 <!-- FOOTER -->
 <footer>
   <div class="foot">
@@ -1880,7 +1901,7 @@
     <div>
       <h6 data-i18n="foot_h_contact">Contact</h6>
       <a href="Contact.html" data-i18n="nav_contact">Contact</a>
-      <a href="/cdn-cgi/l/email-protection#177f727b7b78576463726770627665733974787a"><span class="__cf_email__" data-cfemail="1078757c7c7f506364756077657162743e737f7d">[email&#160;protected]</span></a>
+      <a href="mailto:hello@stepguard.com">hello@stepguard.com</a>
       <a href="#">Cromvoirt, NL</a>
       <a href="#">LinkedIn</a>
     </div>
@@ -1891,7 +1912,7 @@
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   // ---- Site i18n (marketing shell) ----
   // Dutch is the source-of-truth in DOM; this dict maps to EN + DE.
   const SITE_I18N = {
@@ -1930,13 +1951,14 @@
       hero_meta_3: 'Per-step AI inspection',
       hero_stage_live: 'Live · U-Bahn pilot', hero_stage_cam: 'Cam #SG-04-A',
       hud_t1: 'Step integrity scan · Level 1',
-      hud_s1: 'Level 1, All steps nominal · 0 anomalies',
+      hud_s1: 'Level 1, Wear within margin · all steps measured',
       hud_t2: 'Step integrity scan · Level 2',
       hud_s2: 'Level 2, Tread wear detected · Step 09',
       hud_t3: 'Step integrity scan · Level 3',
       hud_s3: 'Level 3, Alert sent · failure expected in ±3 weeks',
       hud_t4: 'Planned fix · Work order WO-2231',
       hud_s4: 'Maintenance scheduled · step 09 replaced before failure',
+      hud_wear_label: 'Wear per step · live measurement',
       card_d_e: 'Detection · Cam SG-04-A', card_d_t: 'Edge wear · step 09', card_d_m: 'Depth 2.3 mm · 97% confidence',
       card_a_e: 'Alert → platform', card_a_t: 'High priority · failure expected in ±3 weeks', card_a_m: 'Technician and part suggested automatically',
       card_p_e: 'Scheduled · work order WO-2231', card_p_t: 'Step 09 replacement · Tuesday 06:00', card_p_m: 'Before rush hour · no unexpected downtime',
@@ -2016,13 +2038,14 @@
       hero_meta_3: 'AI-Inspektion pro Stufe',
       hero_stage_live: 'Live · U-Bahn-Pilot', hero_stage_cam: 'Cam #SG-04-A',
       hud_t1: 'Stufenintegritätsscan · Level 1',
-      hud_s1: 'Level 1, Alle Stufen nominal · 0 Auffälligkeiten',
+      hud_s1: 'Level 1, Verschleiß im Toleranzbereich · alle Stufen gemessen',
       hud_t2: 'Stufenintegritätsscan · Level 2',
       hud_s2: 'Level 2, Trittflächenabnutzung erkannt · Stufe 09',
       hud_t3: 'Stufenintegritätsscan · Level 3',
       hud_s3: 'Level 3, Alarm gesendet · Ausfall in ±3 Wochen erwartet',
       hud_t4: 'Geplante Behebung · Auftrag WO-2231',
       hud_s4: 'Wartung geplant · Stufe 09 wird vor Ausfall getauscht',
+      hud_wear_label: 'Verschleiß pro Stufe · Live-Messung',
       card_d_e: 'Erkennung · Cam SG-04-A', card_d_t: 'Kantenverschleiß · Stufe 09', card_d_m: 'Tiefe 2,3 mm · 97 % Konfidenz',
       card_a_e: 'Alarm → Plattform', card_a_t: 'Hohe Priorität · Ausfall in ±3 Wochen erwartet', card_a_m: 'Techniker und Ersatzteil automatisch vorgeschlagen',
       card_p_e: 'Geplant · Auftrag WO-2231', card_p_t: 'Tausch Stufe 09 · Dienstag 06:00', card_p_m: 'Vor der Stoßzeit · keine ungeplante Stillstandszeit',
@@ -2073,7 +2096,7 @@
   const SITE_NL_SNAPSHOT = {
     // HUD scene strings, not in the DOM initially (set by the scene cycler)
     hud_t1: 'Trede-integriteitsscan · Niveau 1',
-    hud_s1: 'Niveau 1, Alle treden nominaal · 0 afwijkingen',
+    hud_s1: 'Niveau 1, Slijtage binnen marge · alle treden gemeten',
     hud_t2: 'Trede-integriteitsscan · Niveau 2',
     hud_s2: 'Niveau 2, Trede-slijtage gedetecteerd · Trede 09',
     hud_t3: 'Trede-integriteitsscan · Niveau 3',
@@ -2192,7 +2215,42 @@
     const wrapNo = function(n){ return ((n - 1) % 14 + 14) % 14 + 1; };
     // Step identities: numbers descend as steps climb; fresh steps enter at the bottom
     const ids = [];
-    for (let j = 0; j < SLOTS; j++) ids.push({ no: wrapNo(5 - j), worn: false });
+    for (let j = 0; j < SLOTS; j++) ids.push({ no: wrapNo(5 - j) });
+
+    // ---- Per-step wear model: every step carries wear, and it grows over time ----
+    const TOTAL = 14;
+    const WEAR_SEED = [52, 44, 57, 16, 49, 41, 61, 38, 88, 46, 54, 18, 43, 50]; // step 01..14
+    const wearByNo = {};
+    for (let n = 1; n <= TOTAL; n++) wearByNo[n] = WEAR_SEED[n - 1];
+    let criticalNo = WORN_NO;
+    const pad2 = function(n){ return String(n).padStart(2, '0'); };
+    const sevColor = function(w){ return w >= 85 ? '#d63f2b' : w >= 30 ? '#F5C24D' : '#1b8f4a'; };
+
+    // Live per-step wear strip in the HUD (mirrors the platform's tread view)
+    const $bars = document.getElementById('hudBars');
+    const $avg = document.getElementById('hudAvg');
+    let barEls = null;
+    function paintStrip(){
+      if (!$bars) return;
+      if (!barEls){
+        barEls = [];
+        for (let n = 1; n <= TOTAL; n++){
+          const b = document.createElement('div'); b.className = 'hb';
+          const f = document.createElement('i');
+          b.appendChild(f); $bars.appendChild(b);
+          barEls.push({ b: b, f: f });
+        }
+      }
+      let sum = 0;
+      for (let n = 1; n <= TOTAL; n++){
+        const w = wearByNo[n]; sum += w;
+        const e = barEls[n - 1];
+        e.f.style.height = Math.max(5, Math.min(100, w)) + '%';
+        e.f.style.background = sevColor(w);
+        e.b.className = 'hb' + (w >= 85 ? ' hot' : '');
+      }
+      if ($avg) $avg.textContent = 'Ø ' + (sum / TOTAL).toFixed(1) + '%';
+    }
 
     const ti = function(k){ return (window.__i18n_t || function(x){ return x; })(k); };
     let level = 1;
@@ -2209,6 +2267,17 @@
       for (const k in cards){
         if (cards[k]) cards[k].classList.toggle('show', +k === lv);
       }
+      fixStepNos();
+    }
+
+    // Keep the story's step number in HUD + cards in sync with the live critical step
+    function fixStepNos(){
+      const els = [title, status];
+      for (const k in cards) if (cards[k]) els.push(cards[k].querySelector('.sc-title'));
+      els.forEach(function(el){
+        if (!el) return;
+        el.textContent = el.textContent.replace(/\b(trede|step|stufe)(\s+)\d{2}\b/gi, function(m, word, sp){ return word + sp + pad2(criticalNo); });
+      });
     }
 
     // Wear patch styling per story phase
@@ -2236,21 +2305,33 @@
     let crossN = 0, detectAt = -1;
     function onCross(){
       crossN++;
+      // Every passage wears every step a little; the scanned step gets a fresh measurement
+      for (let n = 1; n <= TOTAL; n++) wearByNo[n] = Math.min(99, wearByNo[n] + 0.06);
       const id = ids[2];
+      wearByNo[id.no] = Math.min(99, wearByNo[id.no] + 0.5);
+      const w = Math.round(wearByNo[id.no]);
       const sx = GX + BASE_X + 1.5 * PX + 23, sy = GY + BASE_Y + 1.5 * PY + 4;
-      if (id.worn && level === 1){
+      paintStrip();
+      if (id.no === criticalNo && level === 1){
         detectAt = crossN;
         setLevel(2);
-        tickFlash('#F5C24D', '! 2.3 mm', sx, sy);
+        tickFlash('#F5C24D', '! ' + w + '%', sx, sy);
         return;
       }
       if (level === 2 && crossN === detectAt + 2) setLevel(3);
       else if (level === 3 && crossN === detectAt + 5) setLevel(4);
       else if (level === 4 && crossN === detectAt + 8){
-        ids.forEach(function(d){ d.worn = false; });
+        // Replacement: the critical step gets a fresh tread, the rest keeps wearing,
+        // so the next most-worn step is already on its way to critical
+        wearByNo[criticalNo] = 4;
+        let next = 1;
+        for (let n = 1; n <= TOTAL; n++) if (wearByNo[n] > wearByNo[next]) next = n;
+        criticalNo = next;
+        wearByNo[criticalNo] = Math.max(wearByNo[criticalNo], 87);
         setLevel(1);
+        paintStrip();
       }
-      tickFlash('#1b8f4a', 'OK', sx, sy);
+      tickFlash(sevColor(w), w + '%', sx, sy);
     }
 
     function render(p, now){
@@ -2262,17 +2343,25 @@
           sl.shownNo = id.no;
           sl.label.textContent = String(id.no).padStart(2, '0');
         }
-        if (id.worn){
+        const w = wearByNo[id.no] || 0;
+        const isCrit = id.no === criticalNo;
+        if (isCrit && level > 1){
           const st = WEAR_STYLES[level] || WEAR_STYLES[1];
+          sl.wear.setAttribute('x', '12'); sl.wear.setAttribute('width', '22');
           sl.wear.setAttribute('fill', st.fill);
           sl.wear.setAttribute('opacity', st.op);
           if (st.ring){ sl.ring.setAttribute('stroke', st.ring); sl.ring.setAttribute('opacity', '1'); }
           else sl.ring.setAttribute('opacity', '0');
           sl.label.setAttribute('fill', st.lab || 'rgba(123,215,255,.4)');
         } else {
-          sl.wear.setAttribute('opacity', '0');
+          // Every step shows its measured wear, growing wider and warmer over time
+          const wpx = 6 + (w / 100) * 20;
+          sl.wear.setAttribute('x', (23 - wpx / 2).toFixed(1));
+          sl.wear.setAttribute('width', wpx.toFixed(1));
+          sl.wear.setAttribute('fill', sevColor(w));
+          sl.wear.setAttribute('opacity', (0.14 + (w / 100) * 0.55).toFixed(2));
           sl.ring.setAttribute('opacity', '0');
-          sl.label.setAttribute('fill', 'rgba(123,215,255,.4)');
+          sl.label.setAttribute('fill', w >= 85 ? '#d63f2b' : 'rgba(123,215,255,.4)');
         }
       }
       // Laser locks onto the step approaching the scan zone and sweeps across it
@@ -2294,9 +2383,10 @@
 
     const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     setLevel(1);
+    paintStrip();
     if (reduced){
-      // Static storyboard frame: wear already detected on step 09
-      for (let j = 0; j < SLOTS; j++) ids[j] = { no: wrapNo(WORN_NO + (6 - j)), worn: j === 6 };
+      // Static storyboard frame: wear already detected on the critical step
+      for (let j = 0; j < SLOTS; j++) ids[j] = { no: wrapNo(WORN_NO + (6 - j)) };
       setLevel(2);
       render(0.3, 0);
       return;
@@ -2313,7 +2403,7 @@
         p -= 1;
         ids.pop();
         const newNo = wrapNo(ids[0].no + 1);
-        ids.unshift({ no: newNo, worn: newNo === WORN_NO && level === 1 });
+        ids.unshift({ no: newNo });
       }
       render(p, ts);
       requestAnimationFrame(frame);
@@ -2325,33 +2415,33 @@
     const itemsByLang = {
       nl: [
         ['37.455', 'actieve roltrappen · Duitsland · ELA 2023'],
-        ['storingen kunnen leiden tot gevaarlijke situaties'],
-        ['€80.000, gem. spoedreparatie · alleen materiaal'],
+        ['772', 'roltrappen die alleen MVG al beheert'],
+        ['€80.000', 'gem. spoedreparatie · alleen materiaal'],
         ['50+', 'roltrap-storingen · Berlin Hbf · 12 mrt 2026'],
-        ['Een goed onderhouden roltrap kan' '20–30 jaar' 'langer meegaan'],
-        ['Door stepguard wordt predictief onderhoud mogelijk: problemen worden vroegtijdig gesignaleerd voordat ze tot storingen leiden'],
+        ['43%', 'van Duitse bedrijven noemt voorspellend onderhoud als #1 AI-toepassing'],
+        ['85%', 'van Duitse bedrijven ziet gegevensbescherming als grootste AI-zorg'],
         ['EN 115', 'norm behouden, niet-modificerende add-on'],
-        ['In drukke locaties (zoals stations of luchthavens) is minimale downtime cruciaal.'],
+        ['EU AI Act', 'notified-body-beoordeling vanaf januari 2027'],
       ],
       en: [
         ['37,455', 'active escalators · Germany · ELA 2023'],
-        ['Malfunctions can lead to dangerous situations'],
-        ['€80,000, avg. emergency repair · materials only'],
+        ['772', 'escalators operated by MVG alone'],
+        ['€80,000', 'avg. emergency repair · materials only'],
         ['50+', 'escalator failures · Berlin Hbf · 12 Mar 2026'],
-        ['A well-maintained escalator can last 20–30 years or longer'],
-        ['Stepguard' 'enables predictive maintenance: problems are detected early on before they lead to malfunctions'],
-        ['EN 115, standard preserved, non-modifying add-on'],
-        ['In busy locations (such as train stations or airports),  minimal downtime is crucial.],
+        ['43%', 'of German firms rate predictive maintenance as #1 AI use case'],
+        ['85%', 'of German firms rank data protection as top AI concern'],
+        ['EN 115', 'standard preserved, non-modifying add-on'],
+        ['EU AI Act', 'notified-body assessment from Jan 2027'],
       ],
       de: [
-        ['37.455, aktive Eskalatoren · Deutschland · ELA 2023'],
-        ['Störungen können zu gefährlichen Situationen führen'],
-        ['€80.000, Ø Notreparatur · nur Material'],
-        ['50+, Eskalator-Ausfälle · Berlin Hbf · 12. März 2026'],
-        ['Eine gut gewartete Rolltreppe kann eine Lebensdauer von 20 bis 30 Jahren oder mehr haben'],
-        ['Mit Stepguard wird eine vorausschauende Wartung möglich: Probleme werden frühzeitig erkannt, bevor sie zu Störungen führen'],
-        ['EN 115, Norm erhalten, nicht-modifizierender Add-on'],
-        ['An stark frequentierten Orten (wie Bahnhöfen oder Flughäfen) sind minimale Ausfallzeiten von entscheidender Bedeutung.'],
+        ['37.455', 'aktive Eskalatoren · Deutschland · ELA 2023'],
+        ['772', 'Eskalatoren allein im Betrieb der MVG'],
+        ['€80.000', 'Ø Notreparatur · nur Material'],
+        ['50+', 'Eskalator-Ausfälle · Berlin Hbf · 12. März 2026'],
+        ['43%', 'der dt. Unternehmen sehen Predictive Maintenance als Top-AI-Use-Case'],
+        ['85%', 'der dt. Unternehmen nennen Datenschutz als größte AI-Sorge'],
+        ['EN 115', 'Norm erhalten, nicht-modifizierender Add-on'],
+        ['EU AI Act', 'Notified-Body-Bewertung ab Januar 2027'],
       ],
     };
     const track = document.getElementById('ticker');
@@ -2959,78 +3049,62 @@
     render();
   })();
 
- (function roiCalc(){
-  // Constants
-  const DOWNTIME_REDUCTION = 0.70;           // 70% reduction in downtime
-  const STEP_MAINTENANCE_REDUCTION = 0.50;   // 50% reduction in step maintenance
-  const COST_PER_STEP = 120;                 // €120 per step per year
-  
-  // Get all input elements
-  const inputs = {
-    escalators: document.getElementById('roi-escalators'),
-    steps: document.getElementById('roi-steps'),
-    downtime: document.getElementById('roi-downtime'),
-    downtimeCost: document.getElementById('roi-downtime-cost')
-  };
-  
-  // Get all value display elements
-  const labels = {
-    escalators: document.getElementById('roi-escalators-val'),
-    steps: document.getElementById('roi-steps-val'),
-    downtime: document.getElementById('roi-downtime-val'),
-    downtimeCost: document.getElementById('roi-downtime-cost-val')
-  };
-  
-  // Function to draw progress bar on slider
-  function paintProgress(el){
-    const min = +el.min || 0;
-    const max = +el.max || 100;
-    const v = +el.value;
-    const pct = ((v - min) / (max - min)) * 100;
-    el.style.background = 'linear-gradient(to right, var(--accent) 0%, var(--accent) ' + pct + '%, var(--line-strong) ' + pct + '%, var(--line-strong) 100%)';
-  }
-  
-  // Main calculation function
-  function recompute(){
-    const esc = +inputs.escalators.value;
-    const steps = +inputs.steps.value;
-    const dt = +inputs.downtime.value;
-    const dtc = +inputs.downtimeCost.value;
-    
-    // Update displayed values
-    labels.escalators.textContent = esc;
-    labels.steps.textContent = steps;
-    labels.downtime.textContent = dt + ' u';
-    labels.downtimeCost.textContent = '€ ' + dtc;
-    
-    // CALCULATIONS:
-    // Downtime savings = escalators × downtime hours × cost per hour × 70% reduction
-    const dtSav = esc * dt * dtc * DOWNTIME_REDUCTION;
-    
-    // Step maintenance = total steps × €120 × 50% reduction
-    const stepMaintenance = steps * COST_PER_STEP;
-    const stSav = stepMaintenance * STEP_MAINTENANCE_REDUCTION;
-    
-    // Total savings
-    const total = dtSav + stSav;
-    const per = esc > 0 ? total / esc : 0;
-    
-    // Update result display
-    document.getElementById('roi-total').textContent = '€ ' + Math.round(total);
-    document.getElementById('roi-downtime-savings').textContent = '€ ' + Math.round(dtSav);
-    document.getElementById('roi-step-savings').textContent = '€ ' + Math.round(stSav);
-    document.getElementById('roi-per-escalator').textContent = '€ ' + Math.round(per) + ' / roltrap / jaar';
-    
-    // Update all slider progress bars
-    Object.values(inputs).forEach(paintProgress);
-  }
-  
-  // Listen to input changes
-  Object.values(inputs).forEach(el => el.addEventListener('input', recompute));
-  
-  // Initial calculation
-  recompute();
-})();
+  // ---- ROI Calculator ----
+  (function roiCalc(){
+    const DOWNTIME_REDUCTION = 0.70;
+    const STEP_MAINTENANCE_REDUCTION = 0.50;
+    const COST_PER_STEP = 120; // Cost to maintain/replace one step per year
+    const FMT = {
+      nl: { currency: (n)=> '€ ' + Math.round(n).toLocaleString('nl-NL'), number: (n)=> n.toLocaleString('nl-NL'), hour:' u', per:' / roltrap / jaar' },
+      en: { currency: (n)=> '€ ' + Math.round(n).toLocaleString('en-GB'), number: (n)=> n.toLocaleString('en-GB'), hour:' h', per:' / escalator / year' },
+      de: { currency: (n)=> '€ ' + Math.round(n).toLocaleString('de-DE'), number: (n)=> n.toLocaleString('de-DE'), hour:' h', per:' / Rolltreppe / Jahr' }
+    };
+    const $ = (id)=> document.getElementById(id);
+    const inputs = {
+      escalators: $('roi-escalators'),
+      steps: $('roi-steps'),
+      downtime: $('roi-downtime'),
+      downtimeCost: $('roi-downtime-cost')
+    };
+    if (!inputs.escalators) return;
+    const labels = {
+      escalators: $('roi-escalators-val'),
+      steps: $('roi-steps-val'),
+      downtime: $('roi-downtime-val'),
+      downtimeCost: $('roi-downtime-cost-val')
+    };
+    function paintProgress(el){
+      const min = +el.min || 0, max = +el.max || 100, v = +el.value;
+      const pct = ((v - min) / (max - min)) * 100;
+      el.style.background = 'linear-gradient(to right, var(--accent) 0%, var(--accent) ' + pct + '%, var(--line-strong) ' + pct + '%, var(--line-strong) 100%)';
+    }
+    function recompute(){
+      const lang = document.documentElement.lang || 'nl';
+      const f = FMT[lang] || FMT.nl;
+      const esc = +inputs.escalators.value;
+      const steps = +inputs.steps.value;
+      const dt = +inputs.downtime.value;
+      const dtc = +inputs.downtimeCost.value;
+      labels.escalators.textContent = f.number(esc);
+      labels.steps.textContent = f.number(steps);
+      labels.downtime.textContent = f.number(dt) + f.hour;
+      labels.downtimeCost.textContent = f.currency(dtc);
+      // Calculation: downtime savings + step maintenance savings
+      const dtSav = esc * dt * dtc * DOWNTIME_REDUCTION;
+      const stepMaintenance = steps * COST_PER_STEP;
+      const stSav = stepMaintenance * STEP_MAINTENANCE_REDUCTION;
+      const total = dtSav + stSav;
+      const per = esc > 0 ? total / esc : 0;
+      $('roi-total').textContent = f.currency(total);
+      $('roi-downtime-savings').textContent = f.currency(dtSav);
+      $('roi-step-savings').textContent = f.currency(stSav);
+      $('roi-per-escalator').textContent = f.currency(per) + f.per;
+      Object.values(inputs).forEach(paintProgress);
+    }
+    Object.values(inputs).forEach(el => el.addEventListener('input', recompute));
+    window.__roiRecompute = recompute;
+    recompute();
+  })();
 
   // ---- Reveal on scroll ----
   const io = new IntersectionObserver((entries) => {
