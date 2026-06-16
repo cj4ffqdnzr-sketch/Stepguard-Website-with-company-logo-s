@@ -3,8 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Stepguard · Contact</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5NiA5NiI+PHJlY3Qgd2lkdGg9Ijk2IiBoZWlnaHQ9Ijk2IiByeD0iMjIiIGZpbGw9IiMxNjIwMmMiLz48cGF0aCBkPSJNMzYgMjAgTDYwIDIwIFE2MyAyMCA2NSAyMiBMNjcuNSAyNSBRNjkgMjcgNjkgMzAgTDY5IDUwIFE2OSA2NyA0OS41IDc3LjIgUTQ4IDc4IDQ2LjUgNzcuMiBRMjcgNjcgMjcgNTAgTDI3IDMwIFEyNyAyNyAyOC41IDI1IEwzMSAyMiBRMzMgMjAgMzYgMjAgWiIgZmlsbD0iI2VlZjFmMyIvPjxyZWN0IHg9IjMyIiB5PSI1MyIgd2lkdGg9IjE1IiBoZWlnaHQ9IjciIHJ4PSIyLjUiIGZpbGw9IiMxNjIwMmMiLz48cmVjdCB4PSIzOS41IiB5PSI0NiIgd2lkdGg9IjE1IiBoZWlnaHQ9IjciIHJ4PSIyLjUiIGZpbGw9IiMxNjIwMmMiLz48cmVjdCB4PSI0NyIgeT0iMzkiIHdpZHRoPSIxNSIgaGVpZ2h0PSI3IiByeD0iMi41IiBmaWxsPSIjZTA1MjFmIi8+PC9zdmc+" />
+<title>Stepguard · Duurzaamheid & SDG-impact</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -65,7 +64,7 @@
   nav.top{
     position: sticky; top: 0; z-index: 30;
     backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    background: rgba(4,7,12,.72);
     border-bottom: 1px solid var(--line);
   }
   .nav-inner{
@@ -85,33 +84,6 @@
   }
   .back:hover{ border-color: var(--accent); color: var(--accent-2);}
   .back svg{ width: 14px; height: 14px;}
-  .nav-links{ display:flex; gap:26px; align-items:center; }
-  .nav-links a{ font-family:var(--display); font-size:14px; font-weight:500; color:var(--steel); letter-spacing:-.005em; transition:color .15s; }
-  .nav-links a:hover{ color:var(--accent-2); }
-  .nav-links a.active{ color:var(--accent-2); }
-  @media(max-width:680px){ .nav-links{ display:none; } }
-  .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start; }
-  @media(max-width:860px){ .contact-grid{ grid-template-columns:1fr; gap:32px; } }
-  .people{ display:flex; flex-direction:column; gap:12px; margin-top:18px; }
-  .person{ display:flex; align-items:center; gap:16px; padding:18px; border:1px solid var(--line); border-radius:12px; background:var(--surface); transition:border-color .15s, transform .15s; }
-  .person:hover{ border-color:var(--accent); transform:translateY(-1px); }
-  .person .avatar{ width:44px;height:44px;flex:none;border-radius:50%; display:grid;place-items:center; background:rgba(224,82,31,.10); border:1px solid rgba(224,82,31,.25); color:var(--accent-2); font-family:var(--display); font-weight:600; font-size:16px; }
-  .person .info{ display:flex; flex-direction:column; gap:2px; flex:1; min-width:0; }
-  .person .role{ font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-2); }
-  .person .nm{ font-family:var(--display); font-weight:600; font-size:15px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .person .em{ font-size:13px; color:var(--steel); }
-  .person .arrow{ margin-left:auto; color:var(--muted); font-size:18px; }
-  .addr{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:28px; padding-top:28px; border-top:1px solid var(--line); }
-  .addr .lbl{ font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
-  .addr .val{ font-size:14px; color:var(--steel); margin-top:6px; line-height:1.5; }
-  .cform{ border:1px solid var(--line); border-radius:16px; background:var(--surface); padding:28px; display:flex; flex-direction:column; gap:14px; }
-  .cform .r2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-  @media(max-width:480px){ .cform .r2{ grid-template-columns:1fr; } }
-  .cform input, .cform textarea{ width:100%; font:inherit; font-size:14px; color:var(--text); background:var(--bg-2); border:1px solid var(--line-strong); border-radius:10px; padding:13px 14px; }
-  .cform textarea{ resize:vertical; }
-  .cform input::placeholder, .cform textarea::placeholder{ color:var(--dim); }
-  .cform input:focus, .cform textarea:focus{ outline:none; border-color:var(--accent); }
-  .cform .hint{ font-family:var(--mono); font-size:11px; color:var(--muted); letter-spacing:.04em; }
 
   /* ---------- Hero ---------- */
   .hero{ padding: 100px 0 60px;}
@@ -243,49 +215,6 @@
     max-width: var(--maxw); margin-left: auto; margin-right: auto;
     font-family: var(--mono); font-size: 11px; letter-spacing: .08em; color: var(--dim);
   }
-
-  /* ---------- Product sections (ported from main site) ---------- */
-  .section{ padding: 110px 0; border-top: 1px solid var(--line); }
-  @media (max-width: 768px){ .section{ padding: 72px 0; } }
-  .section-eyebrow{ font-family: var(--mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent-2); display:flex;align-items:center;gap:12px; }
-  .section-eyebrow::before{ display:none; }
-  h2.section-title{ font-family: var(--display); font-weight: 600; font-size: clamp(30px, 4vw, 52px); letter-spacing: -.025em; line-height: 1.05; margin: 14px 0 0; max-width: 20ch; text-wrap: balance; }
-  .section-lede{ color: var(--steel); margin-top: 22px; font-size: 17px; line-height: 1.55; max-width: 62ch; }
-
-  .btn-ghost{ background: transparent; color: var(--text); border: 1px solid var(--line-strong); }
-  .btn-ghost:hover{ border-color: var(--accent); color: var(--accent-2); transform: translateY(-1px); }
-  .hero-ctas{ display:flex; gap: 12px; flex-wrap: wrap; margin-top: 34px; }
-
-  .grid-4{ display:grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; margin-top: 56px; }
-  @media(max-width:1024px){ .grid-4{ grid-template-columns: repeat(2,1fr) }}
-  @media(max-width:560px){ .grid-4{ grid-template-columns: 1fr }}
-  .feature{ padding: 28px; border: 1px solid var(--line); border-radius: 14px; background: linear-gradient(180deg, var(--surface), var(--surface-2)); transition: transform .2s, border-color .2s; display:flex;flex-direction:column; }
-  .feature:hover{ transform: translateY(-3px); border-color: var(--line-strong); }
-  .feature .num{ font-family: var(--mono); font-size: 11px; color: var(--accent-2); letter-spacing: .2em; display:flex; justify-content: space-between; align-items: center; }
-  .feature .num .ico{ width: 32px; height: 32px; border-radius: 8px; background: rgba(224,82,31,.08); border: 1px solid rgba(224,82,31,.2); display:grid;place-items:center; color: var(--accent-2); }
-  .feature h3{ font-family: var(--display); font-weight: 600; font-size: 22px; letter-spacing: -.015em; margin: 22px 0 10px; line-height: 1.1; }
-  .feature p{ color: var(--steel); font-size: 14px; line-height: 1.55; margin: 0;}
-  .feature .spec{ margin-top: auto; padding-top: 18px; border-top: 1px dashed var(--line); display:flex; gap: 14px; flex-wrap: wrap;}
-  .feature .spec span{ font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: .08em; }
-
-  .system{ padding: 110px 0; border-top: 1px solid var(--line); }
-  .gallery-grid{ margin-top: 56px; display:grid; grid-template-columns: 1.4fr 1fr 1fr; grid-template-rows: 280px 280px; gap: 14px; }
-  @media(max-width:900px){ .gallery-grid{ grid-template-columns: 1fr 1fr; grid-template-rows: repeat(3, 240px); } }
-  @media(max-width:560px){ .gallery-grid{ grid-template-columns: 1fr; grid-template-rows: repeat(5, 220px); } }
-  .gallery-item{ position: relative; border: 1px solid var(--line); border-radius: 14px; background: repeating-linear-gradient(135deg, rgba(0,0,0,.022) 0 12px, rgba(0,0,0,0) 12px 24px), linear-gradient(180deg, var(--surface), var(--surface-2)); overflow: hidden; display:flex; align-items: flex-end; justify-content: flex-start; padding: 22px; transition: border-color .2s; }
-  .gallery-item:hover{ border-color: var(--line-strong); }
-  .gallery-item.feature{ grid-row: span 2; }
-  @media(max-width:900px){ .gallery-item.feature{ grid-row: span 1; grid-column: span 2; } }
-  @media(max-width:560px){ .gallery-item.feature{ grid-column: span 1; } }
-  .gallery-item .corner{ position: absolute; top: 16px; left: 16px; font-family: var(--mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); display:inline-flex; align-items: center; gap: 8px; }
-  .gallery-item .corner::before{ content:""; width: 5px; height: 5px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 6px var(--accent);}
-  .gallery-item .meta{ position: absolute; top: 16px; right: 16px; font-family: var(--mono); font-size: 10px; letter-spacing: .12em; color: var(--dim); }
-  .gallery-item .placeholder{ position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-family: var(--mono); font-size: 11px; letter-spacing: .14em; color: var(--dim); white-space: nowrap; }
-  .gallery-item .scan{ position: absolute; inset: 0; background: linear-gradient(180deg, transparent 0%, rgba(224,82,31,.04) 50%, transparent 100%); pointer-events: none; }
-  .gallery-item .caption{ position: relative; z-index: 1; }
-  .gallery-item .caption .lbl{ font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-2); margin-bottom: 6px;}
-  .gallery-item .caption .ttl{ font-family: var(--display); font-weight: 600; font-size: 20px; letter-spacing: -.01em; color: var(--text); }
-  .gallery-item .caption .sub{ font-family: var(--mono); font-size: 11px; color: var(--muted); margin-top: 6px; max-width: 36ch; }
 </style>
 
 <!-- Theme boot, apply persisted theme inline (no flash) -->
@@ -299,7 +228,7 @@
     plum:{'--bg':'#08050f','--bg-2':'#0e0a16','--surface':'#14101e','--surface-2':'#1c1730','--line':'rgba(220,210,255,.07)','--line-strong':'rgba(220,210,255,.14)','--text':'#ECE8F5','--muted':'#9489A8','--dim':'#5F557A','--steel':'#C8BDD6','--accent':'#8B5CF6','--accent-2':'#C4B5FD','--accent-deep':'#4C1D95','--laser':'#FF2A6A','--ok':'#34D399','--warn':'#FBBF24','--hot':'#F472B6'},
     paper:{'--bg':'#F4F1EC','--bg-2':'#ECE7DE','--surface':'#FFFFFF','--surface-2':'#F8F4EC','--line':'rgba(15,25,40,.08)','--line-strong':'rgba(15,25,40,.18)','--text':'#14181D','--muted':'#5A6776','--dim':'#8A96A3','--steel':'#3A4350','--accent':'#e0521f','--accent-2':'#cf4a1c','--accent-deep':'#a3401a','--laser':'#C81313','--ok':'#16A34A','--warn':'#D97706','--hot':'#DC2626'}
   };
-  var key = 'paper';
+  var key = 'midnight';
   try { key = localStorage.getItem('sg_theme') || key; } catch(_){}
   var v = THEME_VARS[key] || THEME_VARS.midnight;
   var root = document.documentElement;
@@ -313,56 +242,179 @@
 
 <nav class="top">
   <div class="nav-inner">
-    <a href="index.html" class="brand" aria-label="Stepguard home"><span class="brand-mark"><svg class="sg-mark" viewBox="0 0 96 96" role="img" aria-label="Stepguard"><rect width="96" height="96" rx="22" fill="#16202c"/><path d="M36 20 L60 20 Q63 20 65 22 L67.5 25 Q69 27 69 30 L69 50 Q69 67 49.5 77.2 Q48 78 46.5 77.2 Q27 67 27 50 L27 30 Q27 27 28.5 25 L31 22 Q33 20 36 20 Z" fill="#eef1f3"/><rect x="32" y="53" width="15" height="7" rx="2.5" fill="#16202c"/><rect x="39.5" y="46" width="15" height="7" rx="2.5" fill="#16202c"/><rect x="47" y="39" width="15" height="7" rx="2.5" fill="#e0521f"/></svg></span><span class="brand-name">step<b>guard</b></span></a>
-    <div class="nav-links">
-      <a href="Product.html">Product</a>
-      <a href="Over-ons.html">Over ons</a>
-      <a href="Contact.html" class="active">Contact</a>
-    </div>
-    <a href="Contact.html" class="btn btn-primary">Demo aanvragen</a>
+    <a href="index.html" class="brand" aria-label="Stepguard home">
+      <span class="brand-mark"><svg class="sg-mark" viewBox="0 0 96 96" role="img" aria-label="Stepguard"><rect width="96" height="96" rx="22" fill="#16202c"/><path d="M36 20 L60 20 Q63 20 65 22 L67.5 25 Q69 27 69 30 L69 50 Q69 67 49.5 77.2 Q48 78 46.5 77.2 Q27 67 27 50 L27 30 Q27 27 28.5 25 L31 22 Q33 20 36 20 Z" fill="#eef1f3"/><rect x="32" y="53" width="15" height="7" rx="2.5" fill="#16202c"/><rect x="39.5" y="46" width="15" height="7" rx="2.5" fill="#16202c"/><rect x="47" y="39" width="15" height="7" rx="2.5" fill="#e0521f"/></svg></span>
+      <span class="brand-name">step<b>guard</b></span>
+    </a>
+    <a href="index.html" class="back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Terug naar Stepguard
+    </a>
   </div>
 </nav>
 
 <section class="hero">
   <div class="wrap">
-    <div class="eyebrow">Contact</div>
-    <h1 class="title">Praat met de <em>juiste persoon</em>.</h1>
-    <p class="lede">Wilt u weten wat Stepguard voor uw roltrappen kan betekenen? Mail rechtstreeks of vul het formulier in, we reageren binnen twee werkdagen, in het Nederlands, Engels of Duits.</p>
+    <div class="eyebrow">Duurzaamheid · SDG-impact rapport</div>
+    <h1 class="title">Voorspellend onderhoud met <em>meetbare</em> impact op zes UN&#x2011;doelen.</h1>
+    <p class="lede">De impact van Stepguard reikt verder dan de bedrijfsresultaten van Cboost. Door storingen weken vooraf te detecteren <strong>besparen we tonnen aluminium en CO₂</strong>, beschermen we kwetsbare passagiers in publieke ruimtes, herwaarderen we het werk van monteurs en behouden we menselijke controle op safety&#x2011;critical AI. Hieronder dertien concrete impactpunten over vier dimensies, elk gekoppeld aan de UN Sustainable Development Goals.</p>
+
+    <div class="sdg-strip">
+      <div class="sdg-tile" style="--c:var(--sdg-9)"><div class="num">09</div><div class="ttl">Industrie<br/>&amp; infrastructuur</div></div>
+      <div class="sdg-tile" style="--c:var(--sdg-11)"><div class="num">11</div><div class="ttl">Duurzame<br/>steden</div></div>
+      <div class="sdg-tile" style="--c:var(--sdg-12)"><div class="num">12</div><div class="ttl">Verantwoorde<br/>consumptie</div></div>
+      <div class="sdg-tile" style="--c:var(--sdg-13)"><div class="num">13</div><div class="ttl">Klimaat<br/>actie</div></div>
+      <div class="sdg-tile" style="--c:var(--sdg-16)"><div class="num">16</div><div class="ttl">Sterke<br/>instituties</div></div>
+      <div class="sdg-tile" style="--c:var(--sdg-17)"><div class="num">17</div><div class="ttl">Partner<br/>schap</div></div>
+    </div>
   </div>
 </section>
 
-<section class="section" style="border-top:0; padding-top:24px;">
+<!-- ECONOMIC -->
+<section class="dim-section" id="economic">
   <div class="wrap">
-    <div class="contact-grid">
+    <div class="dim-head">
+      <div class="dim-num">01</div>
       <div>
-        <div class="section-eyebrow">Direct contact</div>
-        <div class="people">
-          <a class="person" href="mailto:willem@stepguard.nl"><span class="avatar">W</span><span class="info"><span class="role">Verkoop</span><span class="nm">Willem van der Heijden</span><span class="em">willem@stepguard.nl</span></span><span class="arrow">→</span></a>
-          <a class="person" href="mailto:gertjan@stepguard.nl"><span class="avatar">G</span><span class="info"><span class="role">Planning</span><span class="nm">Gertjan van den Bogaert</span><span class="em">gertjan@stepguard.nl</span></span><span class="arrow">→</span></a>
-          <a class="person" href="mailto:daniel@stepguard.nl"><span class="avatar">D</span><span class="info"><span class="role">Techniek</span><span class="nm">Daniël Telgen</span><span class="em">daniel@stepguard.nl</span></span><span class="arrow">→</span></a>
-        </div>
-        <div class="addr">
-          <div><div class="lbl">Adres</div><div class="val">Loverensestraat 31<br/>5266&nbsp;AN Cromvoirt<br/>Nederland</div></div>
-          <div><div class="lbl">KvK</div><div class="val">42054745</div></div>
-          <div><div class="lbl">Bedrijf</div><div class="val">Stepguard B.V.</div></div>
-        </div>
+        <h2 class="dim-title">Economische impact</h2>
+        <p class="dim-lede">ROI vanaf de eerste voorkomen storing. Disruptie van de reactief&#x2011;onderhoudsmarkt en directe versterking van de lokale Duitse hardware&#x2011;sector.</p>
       </div>
-      <form class="cform" onsubmit="event.preventDefault(); const b=this.querySelector('button'); b.textContent='Bedankt, we nemen contact op'; b.disabled=true;">
-        <div class="section-eyebrow" style="margin-bottom:4px;">Vraag een demo aan</div>
-        <div class="r2"><input type="text" placeholder="Voornaam" required/><input type="text" placeholder="Operator / bedrijf" required/></div>
-        <input type="email" placeholder="Zakelijk e-mailadres" required/>
-        <input type="text" placeholder="Netwerkgrootte, ca. aantal roltrappen"/>
-        <textarea rows="3" placeholder="Uw vraag (optioneel)"></textarea>
-        <button class="btn btn-primary" type="submit">Demo aanvragen</button>
-        <div class="hint">Wij reageren in het Nederlands, Engels of Duits, uw keuze.</div>
-      </form>
     </div>
+    <div class="table">
+      <div class="row">
+        <div class="aspect">Besparing voor operators</div>
+        <div class="detail">Een spoedreparatie kost tot <strong style="color:var(--text)">€80.000</strong> aan materiaal alleen. De ROI van Stepguard wordt gerealiseerd vanaf de eerste voorkomen storing, exclusief stilstand, gederfde ticketinkomsten en SLA&#x2011;boetes.</div>
+        <div class="sdgs"><span class="sdg-pill" style="--c:var(--sdg-9)">SDG 9</span></div>
+      </div>
+      <div class="row">
+        <div class="aspect">Disruptie van de OEM&#x2011;markt</div>
+        <div class="detail">Schindler, KONE en ThyssenKrupp halen aanzienlijke omzet uit reactief onderhoud. Stepguard prikkelt de hele sector om te innoveren op preventie in plaats van reparatie.</div>
+        <div class="sdgs"><span class="sdg-pill" style="--c:var(--sdg-9)">SDG 9</span></div>
+      </div>
+      <div class="row">
+        <div class="aspect">Lokale toeleveringsketen</div>
+        <div class="detail">De IDS-camera's worden geproduceerd in <strong style="color:var(--text)">Obersulm, Duitsland</strong>, directe ondersteuning van de Duitse hardware&#x2011;maakindustrie en in lijn met de Industrie 4.0&#x2011;agenda.</div>
+        <div class="sdgs"><span class="sdg-pill" style="--c:var(--sdg-9)">SDG 9</span><span class="sdg-pill" style="--c:var(--sdg-11)">SDG 11</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL -->
+<section class="dim-section" id="social">
+  <div class="wrap">
+    <div class="dim-head">
+      <div class="dim-num">02</div>
+      <div>
+        <h2 class="dim-title">Sociale impact</h2>
+        <p class="dim-lede">Veiligheid voor wie het meest van publieke infrastructuur afhankelijk is. Beter werk voor de monteurs die haar in stand houden.</p>
+      </div>
+    </div>
+    <div class="table">
+      <div class="row">
+        <div class="aspect">Publieke veiligheid &amp; toegankelijkheid</div>
+        <div class="detail">Op 12 maart vielen <strong style="color:var(--text)">50+ roltrappen</strong> uit op Berlin Hauptbahnhof, op één dag. Stepguards vier&#x2011;niveau alarmsysteem detecteert slijtage vóór een tredebreuk en voorkomt zo ongelukken voor ouderen en minder mobiele gebruikers van publieke ruimtes.</div>
+        <div class="sdgs"><span class="sdg-pill" style="--c:var(--sdg-11)">SDG 11</span></div>
+      </div>
+      <div class="row">
+        <div class="aspect">Werkomstandigheden van monteurs</div>
+        <div class="detail">Stepguard verschuift onderhoud van gevaarlijke noodoproepen naar geplande, gestructureerde voorspellende inzet. Monteurs krijgen vooraf gewaarschuwd en bouwen tegelijk data&#x2011;literacy op. De rol wordt <strong style="color:var(--text)">opgewaardeerd, niet vervangen</strong>.</div>
+        <div class="sdgs"><span class="sdg-pill" style="--c:var(--sdg-17)">SDG 17</span></div>
+      </div>
+      <div class="row">
+        <div class="aspect">Digitale inclusie</div>
+        <div class="detail">Duits&#x2011; en Nederlandstalige interface, exporteerbare EN 115&#x2011;conforme incidentrapporten en een transparant alarmsysteem zorgen dat ál het bedienend personeel, ongeacht technische achtergrond, het platform effectief kan gebruiken.</div>
+        <div class="sdgs"><span class="sdg-pill" style="--c:var(--sdg-11)">SDG 11</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ECOLOGICAL -->
+<section class="dim-section" id="ecological">
+  <div class="wrap">
+    <div class="dim-head">
+      <div class="dim-num">03</div>
+      <div>
+        <h2 class="dim-title">Ecologische impact</h2>
+        <p class="dim-lede">Iedere niet&#x2011;vervangen trede is 15 kg aluminium en 222 kg CO₂ die in de keten blijft. Voorspellend onderhoud sluit aan op Duitslands NCES circulaire&#x2011;economie&#x2011;strategie.</p>
+      </div>
+    </div>
+    <div class="table">
+      <div class="row">
+        <div class="aspect">CO₂-reductie</div>
+        <div class="detail">Eén roltraptrede weegt circa <strong style="color:var(--text)">15 kg aluminium</strong> en veroorzaakt ~222 kg CO₂&#x2011;uitstoot bij vervanging, exclusief de stroom die nodig is om de roltrap te draaien. Iedere voorkomen vervanging is directe vermeden uitstoot.</div>
+        <div class="sdgs"><span class="sdg-pill" style="--c:var(--sdg-13)">SDG 13</span></div>
+      </div>
+      <div class="row">
+        <div class="aspect">Materiaalverspilling verminderen</div>
+        <div class="detail">Preventief onderhoud verlengt de levensduur van treden en roltrappen, vermindert vervangingscycli en verlaagt aluminium&#x2011;winning en industrieel afval. Aansluitend op Duitslands NCES circulaire&#x2011;economie&#x2011;strategie.</div>
+        <div class="sdgs"><span class="sdg-pill" style="--c:var(--sdg-12)">SDG 12</span></div>
+      </div>
+      <div class="row">
+        <div class="aspect">Milieurapportage</div>
+        <div class="detail">De Impact&#x2011;rapportpagina van het platform houdt vermeden tredewissels en maandelijkse besparingen realtime bij, ter ondersteuning van ESG&#x2011;rapportage voor operators zoals de NS.</div>
+        <div class="sdgs"><span class="sdg-pill" style="--c:var(--sdg-12)">SDG 12</span><span class="sdg-pill" style="--c:var(--sdg-13)">SDG 13</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ETHICAL -->
+<section class="dim-section" id="ethical">
+  <div class="wrap">
+    <div class="dim-head">
+      <div class="dim-num">04</div>
+      <div>
+        <h2 class="dim-title">Ethische impact</h2>
+        <p class="dim-lede">AI als hulpmiddel, mens als beslisser. EU AI Act&#x2011;conform vanaf dag één; respectvolle implementatie in elke nieuwe markt.</p>
+      </div>
+    </div>
+    <div class="table">
+      <div class="row">
+        <div class="aspect">AI&#x2011;transparantie &amp; menselijk toezicht</div>
+        <div class="detail">Een Level&#x2011;4 alarm activeert een uitschakelvoorstel om mechanisch falen te voorkomen, maar het systeem doet altijd alleen een <strong style="color:var(--text)">suggestie</strong>. Menselijk ingrijpen blijft te allen tijde vereist.</div>
+        <div class="sdgs"><span class="sdg-pill" style="--c:var(--sdg-16)">SDG 16</span></div>
+      </div>
+      <div class="row">
+        <div class="aspect">EU AI Act&#x2011;conformiteit</div>
+        <div class="detail">Het AI&#x2011;vision&#x2011;component vervult een safety&#x2011;critical functie in publieke infrastructuur en wordt daarmee als <strong style="color:var(--text)">hoog risico</strong> geclassificeerd onder de EU AI Act. Notified&#x2011;body&#x2011;assessment is opgenomen in het 15&#x2011;stappen commercialisatieplan en gefinancierd via de DHI&#x2011;subsidie&#x2011;aanvraag.</div>
+        <div class="sdgs"><span class="sdg-pill" style="--c:var(--sdg-16)">SDG 16</span></div>
+      </div>
+      <div class="row">
+        <div class="aspect">Respect voor de werkvloer</div>
+        <div class="detail">Stepguard schaft reactieve onderhoudsrollen niet af, het waardeert ze op. Bevestigd in de MVG&#x2011;interview: Duitse operators beheren onderhoud nu via checklists. Het platform automatiseert dat proces en ondersteunt de monteurs erin.</div>
+        <div class="sdgs"><span class="sdg-pill" style="--c:var(--sdg-9)">SDG 9</span></div>
+      </div>
+      <div class="row">
+        <div class="aspect">Verantwoorde Europese expansie</div>
+        <div class="detail">Naarmate Stepguard verder de EU&#x2011;markt betreedt, committeert Cboost zich aan hetzelfde ethische minimum overal: <strong style="color:var(--text)">menselijk toezicht op alle AI&#x2011;getriggerde suggesties</strong>.</div>
+        <div class="sdgs"><span class="sdg-pill" style="--c:var(--sdg-17)">SDG 17</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section class="closer">
+  <div>
+    <h2>Impact die ESG&#x2011;rapporten daadwerkelijk kunnen citeren.</h2>
+    <p>De Impact&#x2011;rapportpagina van het platform berekent vermeden CO₂, bespaard aluminium en uitgespaarde onderhoudsuren in realtime. Operators als de NS kunnen die cijfers direct opnemen in hun jaarlijkse duurzaamheidsverslag.</p>
+    <div style="margin-top: 24px;">
+      <a href="index.html#contact" class="btn btn-primary">Plan een pilotgesprek</a>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="v">222 kg</div><div class="l">CO₂ per voorkomen trede</div></div>
+    <div class="stat"><div class="v">15 kg</div><div class="l">Aluminium per trede</div></div>
+    <div class="stat"><div class="v">6 SDGs</div><div class="l">Geraakte UN&#x2011;doelen</div></div>
+    <div class="stat"><div class="v">13</div><div class="l">Concrete impactpunten</div></div>
   </div>
 </section>
 
 <footer class="foot">
   <div>© 2026 Stepguard B.V. · Cboost spin-off</div>
-  <div>Voorspellend toezicht · sensor · edge-AI · asset-platform</div>
+  <div>Bron: <em>Rem Professional Product</em> · Hoofdstuk 5 · Impact with Respect</div>
 </footer>
 
 <script src="arrange.js"></script>
